@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,12 +31,20 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User saveMember(User member) {
-        validateDuplicateMember(member);
-        return userRepository.save(member);
+    public User createUser(SignupRequest request, PasswordEncoder passwordEncoder){
+        User user = new User();
+
+        String password= passwordEncoder.encode(request.getPassword());
+        user.setPassword(password); // 암호화 필요!
+        user.setCeoName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setNickname(request.getNickname());
+
+        // DB에 저장
+        return userRepository.save(user);
     }
 
-    public User resaveMember(User member) {
+    public User resaveUser(User member) {
         return userRepository.save(member);
     }
 
@@ -66,4 +75,6 @@ public class UserService implements UserDetailsService {
         // DB에 저장
         return userRepository.save(user);
     }
+
+
 }

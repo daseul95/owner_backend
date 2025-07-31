@@ -36,11 +36,11 @@ public class UserContoller {
     @ResponseBody
     public ResponseEntity<?> newUser(@RequestBody SignupRequest request) {
 
-        User savedUser = userService.save(request);
+        User savedUser = userService.createUser(request,passwordEncoder);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
-    @PostMapping(value="/login")
+    @PostMapping(value="/user/login")
     @ResponseBody
     public ResponseEntity<?> LoginUser(@RequestBody LoginRequest request) {
 
@@ -52,23 +52,28 @@ public class UserContoller {
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
             );
 
+            User user = (User) authentication.getPrincipal();
+
             System.out.println(authentication);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            User user = (User) authentication.getPrincipal();
             String accessToken = jwtTokenProvider.generateJwtToken(authentication);
             String refreshToken = jwtTokenProvider.generateJwtToken(authentication);
 
             // 2. 리프레시 토큰 저장
             user.setRefreshToken(refreshToken);
-            userService.resaveMember(user);
+            userService.resaveUser(user);
+
 
             String token = jwtTokenProvider.generateJwtToken(authentication);
             Long id = userService.findByEmail(request.getEmail()).getId();
             String userName = userService
                     .findByEmail(request.getEmail()).getName();
 
-            return ResponseEntity.ok(new JwtResponse(accessToken, id, request.getEmail(), userName)); // ✅ JSON 형태로 JWT 보내야 함
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .header("Authorization", "Bearer " + accessToken)
+                    .build();
         } catch (BadCredentialsException ex) {
             System.out.println("비밀번호 또는 아이디 불일치");
             throw ex;
