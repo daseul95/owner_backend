@@ -11,14 +11,14 @@ import java.sql.Timestamp;
 public class Store {
 
     @Id
-    @Column(name="sotre_id")
+    @Column(name="store_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long store_id;
+    private Long storeId;
 
-    private String store_name;
-    private User owner_id;
-    private String business_num;
-    private String post_num;
+    private String storeName;
+    private User ownerId;
+    private String businessNum;
+    private String postNum;
     private String description;
     private String phone;
     private String address;

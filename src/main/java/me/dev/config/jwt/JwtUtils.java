@@ -1,10 +1,10 @@
 package me.dev.config.jwt;
 
-import com.shop.entity.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import me.dev.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +35,7 @@ public class JwtUtils {
   }
   public String generateJwtToken(Authentication authentication) {
 
-    Member userPrincipal = (Member) authentication.getPrincipal();
+    User userPrincipal = (User) authentication.getPrincipal();
 
     return Jwts.builder()
         .setSubject((userPrincipal.getUsername()))

@@ -1,11 +1,11 @@
 package me.dev.config.jwt;
 
-import com.shop.entity.Member;
-import com.shop.service.MemberService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import me.dev.entity.User;
+import me.dev.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
   private JwtUtils jwtUtils;
   
   @Autowired
-  private MemberService memberService;
+  private UserService userService;
 
   private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
@@ -43,7 +43,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String email = jwtUtils.getUserNameFromJwtToken(jwt);
 
 
-        Member userDetails = memberService.findByEmail(email);
+        User userDetails = userService.findByEmail(email);
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(
                         userDetails,

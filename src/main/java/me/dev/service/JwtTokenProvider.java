@@ -1,12 +1,12 @@
 package me.dev.service;
 
-import com.shop.config.jwt.JwtUtils;
-import com.shop.entity.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import me.dev.config.jwt.JwtUtils;
+import me.dev.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.slf4j.Logger;
@@ -32,14 +32,14 @@ public class JwtTokenProvider{
     private int jwtExpirationMs=86400000;
 
     @Autowired
-    private MemberService memberService;
+    private UserService UserService;
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
 
     public String generateJwtToken(Authentication authentication) {
 
-        Member userPrincipal = (Member) authentication.getPrincipal();
+        User userPrincipal = (User) authentication.getPrincipal();
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
@@ -49,18 +49,18 @@ public class JwtTokenProvider{
                 .compact();
     }
 
-    public String generateAccessToken(Member member) {
+    public String generateAccessToken(User user) {
         return Jwts.builder()
-                .setSubject(member.getEmail())
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String generateRefreshToken(Member member) {
+    public String generateRefreshToken(User user) {
         return Jwts.builder()
-                .setSubject(member.getEmail())
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -91,7 +91,7 @@ public class JwtTokenProvider{
 
     public Authentication getAuthentication(String token) {
         String username = getUsernameFromToken(token);
-        Member userDetails = memberService.findByEmail(username);
+        User userDetails = UserService.findByEmail(username);
 
         return new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());

@@ -1,8 +1,8 @@
 package me.dev.config;
 
-import com.shop.config.jwt.AuthEntryPointJwt;
-import com.shop.config.jwt.AuthTokenFilter;
-import com.shop.service.MemberService;
+import me.dev.config.jwt.AuthEntryPointJwt;
+import me.dev.config.jwt.AuthTokenFilter;
+import me.dev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     @Autowired
-    MemberService memberService;
+    UserService userService;
     @Autowired
     UserDetailsService userDetailsService;
 
@@ -68,7 +68,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorizeHttpRequestsCustomizer -> authorizeHttpRequestsCustomizer
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                        .requestMatchers("/", "/member/**", "/item/**", "/board/**").permitAll()
+                        .requestMatchers("/", "/user").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
@@ -105,7 +105,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5174"));
+        config.setAllowedOrigins(List.of("http://localhost:3000"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("Authorization")); // ✅ 이거 있어야 토큰 보임
