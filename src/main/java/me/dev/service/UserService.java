@@ -2,7 +2,7 @@ package me.dev.service;
 
 import me.dev.dto.payload.request.SignupRequest;
 import me.dev.entity.User;
-import me.dev.repository.UserReposioty;
+import me.dev.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserService implements UserDetailsService {
     @Autowired
-    private UserReposioty userRepository;
+    private UserRepository userRepository;
 
 
     @Override

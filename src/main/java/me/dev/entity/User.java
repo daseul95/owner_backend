@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="user")
@@ -16,7 +18,6 @@ import java.util.Collection;
 @Setter
 public class User  implements UserDetails {
 
-    private Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
 
     @Id
     @Column(name="user_id")
@@ -42,12 +43,10 @@ public class User  implements UserDetails {
 
     private String refreshToken;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities = new ArrayList<>();
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
-
     @Override
     public String getPassword(){
         return this.password;

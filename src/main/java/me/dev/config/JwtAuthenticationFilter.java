@@ -27,7 +27,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String path = httpRequest.getRequestURI();
         // 로그인, 회원가입 등 인증 필요 없는 경로는 필터 스킵
-        if (path.startsWith("/member/login") || path.startsWith("/member/signup")) {
+        if (path.startsWith("/user/login") || path.startsWith("/user")) {
             chain.doFilter(request, response);
             return;
         }

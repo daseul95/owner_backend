@@ -2,11 +2,17 @@ package me.dev.entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.net.URL;
 import java.sql.Timestamp;
 
+@Builder
 @Entity
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
 @Table(name="store")
 public class Store {
 
@@ -16,7 +22,10 @@ public class Store {
     private Long storeId;
 
     private String storeName;
-    private User ownerId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User owner;
     private String businessNum;
     private String postNum;
     private String description;
@@ -25,7 +34,7 @@ public class Store {
     private Float lat;
     private Float longti;
     @Nullable
-    private URL image;
+    private String image;
     private Timestamp created_at;
     private Timestamp updated_at;
 

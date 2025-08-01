@@ -73,6 +73,7 @@ sourceSets {
 
 tasks.withType(JavaCompile) {
     options.getGeneratedSourceOutputDirectory().set(generated)
+    options.compilerArgs += ["-parameters"]
 }
 
 test {
