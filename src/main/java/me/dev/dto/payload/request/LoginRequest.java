@@ -8,24 +8,16 @@ import lombok.Setter;
 @Setter
 public class LoginRequest {
 	@NotBlank
-  private String userId;
+  private String email;
 
 	@NotBlank
 	private String password;
 
 	public String getEmail() {
-		return userId;
+		return email;
 	}
 
-	public void setUsername(String userId) {
-		this.userId = userId;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUsername(String email) {
+		this.email = email;
 	}
 }

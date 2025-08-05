@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,12 +22,15 @@ public class User  implements UserDetails {
 
     @Id
     @Column(name="user_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String ceoName;
 
     private String nickname;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Store> stores = new ArrayList<>();
 
     private String area;
 
@@ -42,6 +46,12 @@ public class User  implements UserDetails {
     private Timestamp created_at;
 
     private String refreshToken;
+
+    @PrePersist
+    protected void onCreate() {
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+        created_at = now;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -78,7 +88,7 @@ public class User  implements UserDetails {
     }
 
     public Long getId() {
-        return this.userId;
+        return this.id;
     }
 
     public String getName() {

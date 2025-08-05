@@ -6,6 +6,9 @@ import lombok.*;
 
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Entity
@@ -19,9 +22,19 @@ public class Store {
     @Id
     @Column(name="store_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long storeId;
+    private Long id;
 
     private String storeName;
+
+    // 양방향 관계를 원할 경우
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Menu> menus = new ArrayList<>();
+
+    // 편의 메서드
+    public void addMenu(Menu menu) {
+        menus.add(menu);
+        menu.setStore(this);
+    }
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -35,7 +48,20 @@ public class Store {
     private Float longti;
     @Nullable
     private String image;
+
+
     private Timestamp created_at;
     private Timestamp updated_at;
 
+    @PrePersist
+    protected void onCreate() {
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+        created_at = now;
+        updated_at = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated_at = Timestamp.valueOf(LocalDateTime.now());
+    }
 }

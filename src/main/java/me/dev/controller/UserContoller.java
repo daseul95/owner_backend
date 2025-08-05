@@ -32,7 +32,8 @@ public class UserContoller {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @PostMapping("/user")
+    // 유저 등록
+    @PostMapping("/user/new")
     @ResponseBody
     public ResponseEntity<?> newUser(@RequestBody SignupRequest request) {
 
@@ -40,6 +41,7 @@ public class UserContoller {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
+    //유저 로그인
     @PostMapping(value="/user/login")
     @ResponseBody
     public ResponseEntity<?> LoginUser(@RequestBody LoginRequest request) {

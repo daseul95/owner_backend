@@ -10,21 +10,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/store")
+@RequestMapping
 @RequiredArgsConstructor
 public class StoreController {
 
     private final StoreService storeService;
 
-    @PostMapping
+    // 가게 등록
+    @PostMapping(value="/store/new")
     public ResponseEntity<?> createStore(@RequestBody StoreRequestDto dto) {
         storeService.createStore(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    //가게 하나 조회
+    @GetMapping(value = "/store/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StoreResponseDto> getStore(@PathVariable("id") Long id) {
         StoreResponseDto dto = storeService.getStoreById(id);
         return ResponseEntity.ok(dto);
+    }
+
+    //가게 정보 수정
+    @PutMapping("/store/{id}")
+    public ResponseEntity<?> updateStore(@PathVariable("id") Long id, @RequestBody StoreRequestDto dto){
+        storeService.updateStore(id,dto);
+        return ResponseEntity.ok().build();
     }
 }

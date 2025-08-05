@@ -9,6 +9,7 @@ import me.dev.repository.UserRepository;
 import me.dev.entity.Store;
 import me.dev.entity.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -45,9 +46,27 @@ public class StoreService {
 
         storeRepository.save(store);
     }
+
+    @Transactional
+    public void updateStore(Long id,StoreRequestDto dto){
+        Store store = storeRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException(("가게를 찾을수 없습니다")));
+
+        if(dto.getStoreName() !=null) store.setStoreName(dto.getStoreName());
+        if(dto.getBusinessNum()!=null) store.setBusinessNum(dto.getBusinessNum());
+        if(dto.getPostNum()!=null) store.setPostNum(dto.getPostNum());
+        if(dto.getDescription()!=null) store.setDescription(dto.getDescription());
+        if(dto.getPhone()!=null) store.setPhone(dto.getPhone());
+        if(dto.getAddress()!=null) store.setAddress(dto.getAddress());
+        if(dto.getLat()!=null) store.setLat(dto.getLat());
+        if(dto.getLongti()!=null) store.setLongti(dto.getLongti());
+        if(dto.getImage()!=null)store.setImage(dto.getImage());
+    }
     public StoreResponseDto getStoreById(Long id) {
         Store store = storeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 가게를 찾을 수 없습니다."));
         return new StoreResponseDto(store);
     }
+
+
 }

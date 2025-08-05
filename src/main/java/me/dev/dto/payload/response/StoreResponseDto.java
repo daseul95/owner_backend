@@ -24,7 +24,7 @@ public class StoreResponseDto {
     private Timestamp updated_at;
 
     public StoreResponseDto(Store store) {
-        this.id = store.getStoreId();
+        this.id = store.getId();
         this.storeName = store.getStoreName();
         this.ownerName = store.getOwner().getName(); // User에 name 필드 있다고 가정
         this.businessNum = store.getBusinessNum();
