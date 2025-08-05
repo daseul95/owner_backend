@@ -26,7 +26,7 @@ public class MenuOptionService {
 
         MenuOption option = new MenuOption();
         option.setName(dto.getName());
-        option.setPrice(dto.getPrice());
+        option.setOptionPrice(dto.getOptionPrice());
 
         menu.addOption(option);
 

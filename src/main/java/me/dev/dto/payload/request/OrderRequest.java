@@ -19,12 +19,12 @@ public class OrderRequest {
 
     private String deliveryAddress;
 
-    private List<OrderMenuRequest> orderItems;
-
-    @Getter @Setter
-    public static class OrderMenuRequest {
-        private Long menuId;
-        private int quantity;
-        private List<Long> selectedMenuOptions; // 선택된 옵션 ID들
-    }
+    private List<OrderMenuRequestDto> orderItems;
+//
+//    @Getter @Setter
+//    public static class OrderMenuRequest {
+//        private Long menuId;
+//        private int quantity;
+//        private List<Long> selectedMenuOptions; // 선택된 옵션 ID들
+//    }
 }

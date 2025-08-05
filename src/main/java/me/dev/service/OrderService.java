@@ -2,6 +2,7 @@ package me.dev.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import me.dev.dto.payload.request.OrderMenuRequestDto;
 import me.dev.dto.payload.request.OrderRequest;
 import me.dev.entity.*;
 import me.dev.entity.enumerator.OrderStatus;
@@ -44,15 +45,38 @@ public class OrderService {
         int totalPrice = 0;
 
         // 3. 주문 아이템 처리
-        for (OrderRequest.OrderMenuRequest itemRequest : request.getOrderItems()) {
+        for (OrderMenuRequestDto  itemRequest : request.getOrderItems()) {
             Menu menu = menuRepository.findById(itemRequest.getMenuId())
                     .orElseThrow(() -> new IllegalArgumentException("해당 메뉴 없음"));
 
             OrderMenu orderMenu = new OrderMenu();
             orderMenu.setOrder(order); // 연관관계 주입
             orderMenu.setMenu(menu);
+
+
+
+            // 옵션 리스트 처리
+            List<SelectedMenuOption> selectedOptions = new ArrayList<>();
+            for (OrderMenuRequestDto.SelectedOptionDto optionDto : itemRequest.getSelectedOptions()) {
+                String optionName = optionDto.getOptionName();  // 프론트에서 받은 옵션명
+
+                MenuOption menuOption = menuOptionRepository.findByName(optionName);
+                SelectedMenuOption selectedOption = new SelectedMenuOption();
+                selectedOption.setMenuOption(menuOption);
+                selectedOption.setOptionPrice(menuOption.getOptionPrice());  // 옵션 가격 세팅
+                selectedOption.setOrderMenu(orderMenu); // 연관관계 설정
+
+                selectedOptions.add(selectedOption);
+            }
+
+            orderMenu.setSelectedMenuOptions(selectedOptions);
+
             orderMenu.setQuantity(itemRequest.getQuantity());
-            int menuTotalPrice = menu.getPrice() * itemRequest.getQuantity();
+            int optionTotalPrice = selectedOptions.stream()
+                    .mapToInt(SelectedMenuOption::getOptionPrice)
+                    .sum();
+
+            int menuTotalPrice = (menu.getPrice() + optionTotalPrice) * itemRequest.getQuantity();
             orderMenu.setTotalPrice(menuTotalPrice); // 총 가격 계산
 
             orderMenus.add(orderMenu);

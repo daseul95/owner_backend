@@ -12,7 +12,7 @@ public class MenuOptionResponseDto {
     public MenuOptionResponseDto(MenuOption option) {
         this.id = option.getId();
         this.name = option.getName();
-        this.price = option.getPrice();
+        this.price = option.getOptionPrice();
     }
 
 }

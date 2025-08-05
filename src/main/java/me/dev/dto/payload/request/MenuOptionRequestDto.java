@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class MenuOptionRequestDto {
     private String name;
-    private int price;
+    private int optionPrice;
 }

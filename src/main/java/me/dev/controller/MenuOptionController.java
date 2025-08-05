@@ -31,7 +31,7 @@ public class MenuOptionController {
     // menu/{메뉴 번호(ex)토스트번호(1))}/option
     // 토스트의 옵션 등록
     /*
-    {"name":"햄추가","price":"1000"}
+   {"name":"햄추가","optionPrice":1000}
      */
     @PostMapping("menu/{id}/option")
     public ResponseEntity<MenuOptionResponseDto> createMenuOption(

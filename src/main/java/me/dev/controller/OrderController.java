@@ -17,29 +17,39 @@ public class OrderController {
     private final OrderService orderService;
 
     /*
-    {
-              "customerId": "daseul95",
+              {
               "storeId": 1,
+              "customerId": 1,
               "orderType": "DELIVERY",
-              "deliveryAddress": "서울 강남구 역삼동 123-45",
               "orderItems": [
                 {
                   "menuId": 1,
                   "quantity": 2,
-                  "selectedMenuOptions": [1, 1]
+                  "selectedOptions": [
+                    { "optionName": "햄추가"
+                    ,"optionPrice" : 1000},
+                    { "optionName": "햄추가"
+                     ,"optionPrice" : 1000}
+                  ]
                 },
                 {
-                  "menuId": 1,
+                  "menuId": 2,
                   "quantity": 1,
-                  "selectedMenuOptions": [1]
+                  "selectedOptions": [
+                    { "optionName": "햄추가"
+                     ,"optionPrice" : 1000}
+                  ]
                 }
               ]
             }
      */
     @PostMapping("/order")
-    public ResponseEntity<?> createOrder(@RequestBody OrderRequest request) {
-        // 서비스에 위임하거나 직접 엔티티 생성
-        orderService.createOrder(request);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
+        try {
+            orderService.createOrder(request);
+            return ResponseEntity.ok("주문이 성공적으로 생성되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("주문 생성 실패: " + e.getMessage());
+        }
     }
 }
