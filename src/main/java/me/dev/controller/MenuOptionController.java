@@ -12,15 +12,15 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/menu")
+@RequestMapping
 public class MenuOptionController {
 
     private final MenuOptionService menuOptionService;
 
 
     // 메뉴 옵션 전체 조회
-    // /{메뉴 번호(ex)토스트번호(1))}/options
-    @GetMapping("/{id}/options")
+    // menu/{메뉴 번호(ex)토스트번호(1))}/options
+    @GetMapping("menu/{id}/options")
     public ResponseEntity<List<MenuOptionResponseDto>> getOptions(
             @PathVariable("id") Long menuId) {
 
@@ -28,12 +28,12 @@ public class MenuOptionController {
         return ResponseEntity.ok(options);
     }
     // 메뉴 옵션 하나 등록
-    // /{메뉴 번호(ex)토스트번호(1))}/option
+    // menu/{메뉴 번호(ex)토스트번호(1))}/option
     // 토스트의 옵션 등록
     /*
     {"name":"햄추가","price":"1000"}
      */
-    @PostMapping("/{id}/option")
+    @PostMapping("menu/{id}/option")
     public ResponseEntity<MenuOptionResponseDto> createMenuOption(
             @PathVariable("id") Long menuId,
             @RequestBody MenuOptionRequestDto dto

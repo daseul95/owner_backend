@@ -6,11 +6,12 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Table(name="menuOption")
+@Table(name="menu_option")
 @Setter
 public class MenuOption {
 
     @Id
+    @Column(name="menuOption_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
