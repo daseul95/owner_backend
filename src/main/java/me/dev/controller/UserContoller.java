@@ -42,6 +42,10 @@ public class UserContoller {
     }
 
     //유저 로그인
+    /*
+      {"email":"osl123o@naver.com"
+      ,"password":"12345678"}
+     */
     @PostMapping(value="/user/login")
     @ResponseBody
     public ResponseEntity<?> LoginUser(@RequestBody LoginRequest request) {
