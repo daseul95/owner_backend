@@ -21,6 +21,7 @@ public class SelectedMenuOption {
     @ManyToOne(fetch = FetchType.LAZY)
     private MenuOption menuOption;
 
+    private int quantity;
     private int optionPrice;
 
 }

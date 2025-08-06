@@ -2,6 +2,7 @@ package me.dev.service;
 
 import lombok.RequiredArgsConstructor;
 import me.dev.dto.payload.request.MenuRequestDto;
+import me.dev.dto.payload.request.ToastDto;
 import me.dev.dto.payload.response.MenuOptionResponseDto;
 import me.dev.dto.payload.response.MenuResponseDto;
 import me.dev.entity.Menu;
@@ -49,6 +50,18 @@ public class MenuService {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 메뉴가 없습니다."));
         return menu.getName();
+    }
+
+    public ToastDto getToastById(Long id) {
+        Menu menu = menuRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("메뉴 없음"));
+
+        return new ToastDto(
+                menu.getId(),
+                menu.getName(), // toastName에 대응
+                menu.getDes(),
+                menu.getImgUrl()
+        );
     }
 
 }
