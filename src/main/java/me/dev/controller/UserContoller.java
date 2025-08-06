@@ -18,6 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class UserContoller {
 
@@ -70,16 +73,18 @@ public class UserContoller {
             user.setRefreshToken(refreshToken);
             userService.resaveUser(user);
 
-
-            String token = jwtTokenProvider.generateJwtToken(authentication);
             Long id = userService.findByEmail(request.getEmail()).getId();
             String userName = userService
                     .findByEmail(request.getEmail()).getName();
 
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .header("Authorization", "Bearer " + accessToken)
-                    .build();
+            Map<String, Object> tokens = new HashMap<>();
+            tokens.put("accessToken", accessToken);
+            tokens.put("refreshToken", refreshToken);
+            tokens.put("userName", userName);
+            tokens.put("userId", id);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(tokens);
+
         } catch (BadCredentialsException ex) {
             System.out.println("비밀번호 또는 아이디 불일치");
             throw ex;
