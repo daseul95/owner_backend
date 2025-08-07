@@ -62,6 +62,7 @@ public class StoreService {
         if(dto.getLat()!=null) store.setLat(dto.getLat());
         if(dto.getLongti()!=null) store.setLongti(dto.getLongti());
         if(dto.getImage()!=null)store.setImage(dto.getImage());
+
     }
     public StoreResponseDto getStoreById(Long id) {
         Store store = storeRepository.findById(id)

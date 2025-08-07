@@ -23,7 +23,6 @@ public class Menu {
     @Column(name="menu_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String category;
     private String name;
     private String des;
