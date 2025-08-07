@@ -15,9 +15,11 @@ public class MenuOption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;   // 옵션명 (예: "사이즈", "추가치즈")
-    private int optionPrice;     // 옵션 가격
 
+    private String name;   // 옵션명 (예: "사이즈", "추가치즈")
+    private String category;
+    private int optionPrice;     // 옵션 가격
+    private String des;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
     private Menu menu;

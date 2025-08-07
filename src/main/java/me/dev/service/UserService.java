@@ -21,12 +21,12 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-        System.out.println("email: " + email);
-        System.out.println("Member email: " + user.getEmail());
-        System.out.println("encodedPassword: " + user.getPassword());
+
         if (user == null) {
-            throw new UsernameNotFoundException(email);
+            throw new UsernameNotFoundException("해당 이메일의 사용자를 찾을 수 없습니다 ");
         }
+        System.out.println("✅ 이메일 있음: " + user.getEmail());
+        System.out.println("✅ 비밀번호 해시: " + user.getPassword());
 
         return user;
     }
@@ -35,7 +35,8 @@ public class UserService implements UserDetailsService {
         User user = new User();
 
         String password= passwordEncoder.encode(request.getPassword());
-        user.setPassword(password); // 암호화 필요!
+        user.setLoginId(request.getUserId());
+        user.setPassword(password);
         user.setCeoName(request.getName());
         user.setEmail(request.getEmail());
         user.setNickname(request.getNickname());
@@ -76,5 +77,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-
+    public String findPasswordById(Long id){
+        return userRepository.findPasswordById(id);
+    }
 }

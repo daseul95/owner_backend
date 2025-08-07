@@ -20,7 +20,7 @@ public class MenuController {
 
 
     // 메뉴 하나 등록
-    // /{가게 번호}/toast
+    // /{가게 번호}/menu
     /*
     {
           "category" : "토스트",
@@ -31,7 +31,7 @@ public class MenuController {
         }
 
      */
-    @PostMapping(value = "/{id}/toast", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{id}/menu", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MenuResponseDto> createMenu(
             @PathVariable("id") Long storeId,
             @RequestBody MenuRequestDto dto
@@ -41,15 +41,15 @@ public class MenuController {
     }
 
     // 전체 메뉴 이름 조회
-    @GetMapping("/toast/names")
+    @GetMapping("/menu/names")
     public ResponseEntity<List<String>> getMenuNames() {
         List<String> names = menuService.getMenuNames();
         return ResponseEntity.ok(names);
     }
 
     // 메뉴 하나 조회
-    // /toast/{메뉴번호}
-    @GetMapping("/toast/{id}")
+    // /menu/{메뉴번호}
+    @GetMapping("/menu/{id}")
     public ResponseEntity<ToastDto> getMenuNameById(@PathVariable("id") Long id) {
         ToastDto name = menuService.getToastById(id);
         return ResponseEntity.ok(name);

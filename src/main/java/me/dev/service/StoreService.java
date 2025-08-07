@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -67,6 +68,22 @@ public class StoreService {
                 .orElseThrow(() -> new EntityNotFoundException("해당 가게를 찾을 수 없습니다."));
         return new StoreResponseDto(store);
     }
+
+    public Store getStoreByUserId(Long userId) {
+        return storeRepository.findByOwner_Id(userId)
+                .orElseThrow(() -> new RuntimeException("Store not found for user id: " + userId));
+    }
+
+    public List<Store> getStoresByUserId(Long userId) {
+        return storeRepository.findAllByOwner_Id(userId);
+    }
+
+    public void deleteStore(Long id) {
+        Store store = storeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Store not found with id: " + id));
+        storeRepository.delete(store);
+    }
+
 
 
 }

@@ -47,7 +47,7 @@ public class OrderController {
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
         try {
             orderService.createOrder(request);
-            return ResponseEntity.ok("주문이 성공적으로 생성되었습니다.");
+            return ResponseEntity.ok("주문이 성공적으로 생성되었습니다."+request);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("주문 생성 실패: " + e.getMessage());
         }

@@ -25,6 +25,8 @@ public class User  implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String loginId;
+
     private String ceoName;
 
     private String nickname;
@@ -61,6 +63,7 @@ public class User  implements UserDetails {
     public String getPassword(){
         return this.password;
     }
+
 
     @Override
     public String getUsername() {

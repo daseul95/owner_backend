@@ -14,7 +14,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +37,8 @@ public class UserContoller {
     private AuthenticationManager authenticationManager;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    UserDetailsService userDetailsService;
 
     // 유저 등록
     @PostMapping("/user/new")
@@ -57,14 +62,17 @@ public class UserContoller {
         System.out.println(request.getPassword());
 
         try {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+
+            boolean matches = passwordEncoder.matches(request.getPassword(), userDetails.getPassword());
+            System.out.println("Password match result: " + matches);
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
             );
+            System.out.println("[login] email: " + request.getEmail());
+            System.out.println("[login] password: " + request.getPassword());
 
             User user = (User) authentication.getPrincipal();
-
-            System.out.println(authentication);
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String accessToken = jwtTokenProvider.generateJwtToken(authentication);
             String refreshToken = jwtTokenProvider.generateJwtToken(authentication);
@@ -72,26 +80,20 @@ public class UserContoller {
             // 2. 리프레시 토큰 저장
             user.setRefreshToken(refreshToken);
             userService.resaveUser(user);
-
-            Long id = userService.findByEmail(request.getEmail()).getId();
-            String userName = userService
-                    .findByEmail(request.getEmail()).getName();
+            User userInfo = userService.findByEmail(request.getEmail());
 
             Map<String, Object> tokens = new HashMap<>();
             tokens.put("accessToken", accessToken);
             tokens.put("refreshToken", refreshToken);
-            tokens.put("userName", userName);
-            tokens.put("userId", id);
+            tokens.put("userInfo", userInfo);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(tokens);
 
-        } catch (BadCredentialsException ex) {
-            System.out.println("비밀번호 또는 아이디 불일치");
-            throw ex;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw ex;
+        } catch (Exception e) {
+            e.printStackTrace(); // 여기서 정확한 예외 확인 가능
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: " + e.getMessage());
         }
+
     }
 
 
