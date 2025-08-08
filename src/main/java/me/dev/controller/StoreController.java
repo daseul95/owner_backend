@@ -1,6 +1,7 @@
 package me.dev.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.dev.dto.payload.request.CreateStoreDto;
 import me.dev.dto.payload.request.StoreRequestDto;
 import me.dev.dto.payload.response.StoreResponseDto;
 import me.dev.entity.Store;
@@ -48,9 +49,9 @@ public class StoreController {
           "longti": 114.55,
           "image": "https://internet.com"     }
      */
-    @PostMapping(value = "/store/new")
+    @PostMapping(value = "/store")
     @ResponseBody
-    public ResponseEntity<?> createStore(@RequestBody StoreRequestDto dto) {
+    public ResponseEntity<?> createStore(@RequestBody CreateStoreDto dto) {
 
         storeService.createStore(dto);
 
@@ -61,7 +62,6 @@ public class StoreController {
     }
 
     //가게 번호로 가게 하나 조회
-    //       /store/스토어번호
     @GetMapping(value = "/store/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<StoreResponseDto> getStore(@PathVariable("id") Long id) {
@@ -72,7 +72,6 @@ public class StoreController {
 
 
     //유저 번호로 가게 하나 조회
-    //      /{유저번호}/store
     @GetMapping("/{id}/store")
     public ResponseEntity<?> getStoreByUserId(@PathVariable("id") Long id) {
         try {
@@ -84,8 +83,7 @@ public class StoreController {
     }
 
     //유저 번호로 가게 모두 조회
-    //      /{유저번호}/stores
-    @GetMapping("/{id}/stores")
+    @GetMapping("/store")
     public ResponseEntity<?> getStoresByUserId(@PathVariable("id") Long id) {
         try {
             List<Store> stores = storeService.getStoresByUserId(id); // ← 복수형 메소드명도 권장!
@@ -97,7 +95,6 @@ public class StoreController {
 
 
     //가게 정보 수정
-    //      /store/스토어번호
     /*
     {
           "storeName": "헬로헬로",
@@ -114,17 +111,16 @@ public class StoreController {
           수정안한거는 null 로 반환
      */
     @PutMapping("/store/{id}")
-    public ResponseEntity<?> updateStore(@PathVariable("id") Long id, @RequestBody StoreRequestDto dto) {
+    public ResponseEntity<?> updateStore(@PathVariable("id") Long id, @RequestBody CreateStoreDto dto) {
         storeService.updateStore(id, dto);
         return ResponseEntity.ok().build();
     }
 
-        // "/store/1/1/delete"
-    @DeleteMapping("/store/{user_id}/{store_id}/delete")
-    public ResponseEntity<?> deleteStore(@PathVariable("user_id") Long userId,
-                                         @PathVariable("store_id") Long storeId) {
 
-        storeService.deleteStore(storeId);
+    @DeleteMapping("/store/{id}")
+    public ResponseEntity<?> deleteStore(@PathVariable("id") Long id) {
+
+        storeService.deleteStore(id);
         return ResponseEntity.noContent().build(); // 204 No Content
     }
 }

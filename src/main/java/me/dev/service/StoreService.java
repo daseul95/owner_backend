@@ -2,6 +2,7 @@ package me.dev.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import me.dev.dto.payload.request.CreateStoreDto;
 import me.dev.dto.payload.request.StoreRequestDto;
 import me.dev.dto.payload.response.StoreResponseDto;
 import me.dev.repository.StoreRepository;
@@ -22,7 +23,7 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
 
-    public void createStore(StoreRequestDto dto) {
+    public void createStore(CreateStoreDto dto) {
 
         User owner= userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자 없음"));
@@ -49,7 +50,7 @@ public class StoreService {
     }
 
     @Transactional
-    public void updateStore(Long id,StoreRequestDto dto){
+    public void updateStore(Long id,CreateStoreDto dto){
         Store store = storeRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException(("가게를 찾을수 없습니다")));
 

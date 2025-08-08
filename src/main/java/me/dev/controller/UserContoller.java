@@ -41,7 +41,7 @@ public class UserContoller {
     UserDetailsService userDetailsService;
 
     // 유저 등록
-    @PostMapping("/user/new")
+    @PostMapping("/signin")
     @ResponseBody
     public ResponseEntity<?> newUser(@RequestBody SignupRequest request) {
 
@@ -54,7 +54,7 @@ public class UserContoller {
       {"email":"osl123o@naver.com"
       ,"password":"12345678"}
      */
-    @PostMapping(value="/user/login")
+    @PostMapping(value="/signup")
     @ResponseBody
     public ResponseEntity<?> LoginUser(@RequestBody LoginRequest request) {
 
