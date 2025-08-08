@@ -1,5 +1,6 @@
 package me.dev.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import me.dev.dto.payload.request.CreateStoreDto;
 import me.dev.dto.payload.request.StoreRequestDto;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -61,6 +63,7 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.CREATED).body(storeInfo);
     }
 
+
     //가게 번호로 가게 하나 조회
     @GetMapping(value = "/store/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -71,27 +74,28 @@ public class StoreController {
     }
 
 
-    //유저 번호로 가게 하나 조회
-    @GetMapping("/{id}/store")
-    public ResponseEntity<?> getStoreByUserId(@PathVariable("id") Long id) {
-        try {
-            Store store = storeService.getStoreByUserId(id);
-            return ResponseEntity.ok(store);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-
-    //유저 번호로 가게 모두 조회
+      //가게 모두 조회
     @GetMapping("/store")
-    public ResponseEntity<?> getStoresByUserId(@PathVariable("id") Long id) {
-        try {
-            List<Store> stores = storeService.getStoresByUserId(id); // ← 복수형 메소드명도 권장!
-            return ResponseEntity.ok(stores);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ResponseEntity<?> getStores(@AuthenticationPrincipal User userDetails) {
+        // 로그인한 유저 ID 가져오기
+        Long userId = userDetails.getId();
+
+        // 유저 ID로 스토어 조회
+        List<Store> stores = storeService.getStoresByUserId(userId);
+
+        return ResponseEntity.ok(stores);
         }
-    }
+
+    //유저 번호로 가게 하나 조회
+//    @GetMapping("/{id}/store")
+//    public ResponseEntity<?> getStoreByUserId(@PathVariable("id") Long id) {
+//        try {
+//            Store store = storeService.getStoreByUserId(id);
+//            return ResponseEntity.ok(store);
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//        }
+//    }
 
 
     //가게 정보 수정
@@ -116,7 +120,7 @@ public class StoreController {
         return ResponseEntity.ok().build();
     }
 
-
+  //가게 정보 삭제
     @DeleteMapping("/store/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable("id") Long id) {
 

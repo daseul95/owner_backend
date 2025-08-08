@@ -35,13 +35,15 @@ public class UserContoller {
     private UserService userService;
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
     UserDetailsService userDetailsService;
 
     // 유저 등록
-    @PostMapping("/signin")
+    @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<?> newUser(@RequestBody SignupRequest request) {
 
@@ -49,12 +51,13 @@ public class UserContoller {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
+
     //유저 로그인
     /*
       {"email":"osl123o@naver.com"
       ,"password":"12345678"}
      */
-    @PostMapping(value="/signup")
+    @PostMapping(value="/signin")
     @ResponseBody
     public ResponseEntity<?> LoginUser(@RequestBody LoginRequest request) {
 
@@ -62,18 +65,11 @@ public class UserContoller {
         System.out.println(request.getPassword());
 
         try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-
-            boolean matches = passwordEncoder.matches(request.getPassword(), userDetails.getPassword());
-            System.out.println("Password match result: " + matches);
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
             );
-            System.out.println("[login] email: " + request.getEmail());
-            System.out.println("[login] password: " + request.getPassword());
-
-            User user = (User) authentication.getPrincipal();
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            User user = (User) authentication.getPrincipal();
             String accessToken = jwtTokenProvider.generateJwtToken(authentication);
             String refreshToken = jwtTokenProvider.generateJwtToken(authentication);
 
@@ -89,11 +85,13 @@ public class UserContoller {
 
             return ResponseEntity.status(HttpStatus.CREATED).body(tokens);
 
+        } catch (BadCredentialsException ex) {
+            System.err.println("로그인 실패: 비밀번호 또는 이메일이 일치하지 않음");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
         } catch (Exception e) {
-            e.printStackTrace(); // 여기서 정확한 예외 확인 가능
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 에러");
         }
-
     }
 
 

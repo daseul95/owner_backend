@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,9 +35,6 @@ public class SecurityConfig {
     @Autowired
     UserDetailsService userDetailsService;
 
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
-
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
@@ -47,11 +45,11 @@ public class SecurityConfig {
 //    authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 //  }
 
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
-     authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
@@ -71,22 +69,14 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorizeHttpRequestsCustomizer -> authorizeHttpRequestsCustomizer
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                        .requestMatchers("/", "/user/new","/user/login").permitAll()
+                        .requestMatchers("/", "/signup","/signin").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
                 ).formLogin(
-//                        formLoginCustomizer -> formLoginCustomizer
-//                        .loginPage("/member/login")
-//                        .usernameParameter("email")
-//                        .defaultSuccessUrl("/", true)
-//                        .failureHandler(new FormLoginAuthenticationFailureHandler())
                         form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .logout(
-//                        logoutCustomizer -> logoutCustomizer
-//                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-//                        .logoutSuccessUrl("/")
                         logout -> logout.disable()
                 ).exceptionHandling(e -> e
                         .authenticationEntryPoint((request, response, authException) -> {
@@ -98,13 +88,15 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

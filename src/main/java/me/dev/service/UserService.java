@@ -19,13 +19,13 @@ public class UserService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public User loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("해당 이메일의 사용자를 찾을 수 없습니다 ");
         }
-        System.out.println("✅ 이메일 있음: " + user.getEmail());
+        System.out.println("loadUserByUsername ✅ 이메일 있음: " + user.getEmail());
         System.out.println("✅ 비밀번호 해시: " + user.getPassword());
 
         return user;

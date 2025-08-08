@@ -89,6 +89,10 @@ public class JwtTokenProvider{
         return claims.getSubject(); // subject에 username이 들어있음
     }
 
+
+
+
+
     public Authentication getAuthentication(String token) {
         String username = getUsernameFromToken(token);
         User userDetails = UserService.findByEmail(username);
