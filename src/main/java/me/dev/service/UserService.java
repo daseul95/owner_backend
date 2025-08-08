@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.Optional;
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
@@ -56,6 +56,12 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public User findById(Long userId){
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        User user = optionalUser.orElseThrow(() -> new RuntimeException("유저가 없습니다"));
+        return user;
+    }
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }

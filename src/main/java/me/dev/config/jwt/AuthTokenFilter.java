@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import me.dev.entity.User;
+import me.dev.service.JwtTokenProvider;
 import me.dev.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import java.io.IOException;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
   @Autowired
-  private JwtUtils jwtUtils;
+  private JwtTokenProvider jwtTokenProvider;
   
   @Autowired
   private UserService userService;
@@ -38,12 +39,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
     try {
       String jwt = parseJwt(request);
-      if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+      if (jwt != null && jwtTokenProvider.validateJwtToken(jwt)) {
         System.out.println("JWT 인증 성공: " + jwt);
-        String email = jwtUtils.getUserNameFromJwtToken(jwt);
+        String strId = jwtTokenProvider.getUsernameFromToken(jwt);
+        Long userId = Long.parseLong(strId);
 
 
-        User userDetails = userService.findByEmail(email);
+        User userDetails = userService.findById(userId);
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(
                         userDetails,

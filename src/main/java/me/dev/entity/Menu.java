@@ -1,5 +1,6 @@
 package me.dev.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,10 +20,15 @@ import java.util.List;
 @Setter
 public class Menu {
 
+
     @Id
     @Column(name="menu_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    private User user;
+
     private String category;
     private String name;
     private String des;
@@ -31,6 +37,7 @@ public class Menu {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
+    @JsonBackReference
     private Store store;
 
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)

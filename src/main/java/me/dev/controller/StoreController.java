@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping
@@ -53,9 +54,9 @@ public class StoreController {
      */
     @PostMapping(value = "/store")
     @ResponseBody
-    public ResponseEntity<?> createStore(@RequestBody CreateStoreDto dto) {
-
-        storeService.createStore(dto);
+    public ResponseEntity<?> createStore(@RequestBody CreateStoreDto dto,@AuthenticationPrincipal User userDetails) {
+        User user = userDetails;
+        storeService.createStore(dto,user);
 
         Map<String, Object> storeInfo = new HashMap<>();
         storeInfo.put("storeInfo", dto);
@@ -83,7 +84,12 @@ public class StoreController {
         // 유저 ID로 스토어 조회
         List<Store> stores = storeService.getStoresByUserId(userId);
 
-        return ResponseEntity.ok(stores);
+        List<StoreResponseDto> storeDto = stores.stream()
+                .map( store -> new StoreResponseDto(store.getStoreName(),userId,store.getBusinessNum(),
+                        store.getPostNum(),store.getDescription(),store.getPhone(),store.getAddress(),
+                store.getLat(),store.getLongti(),store.getImage()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(storeDto);
         }
 
     //유저 번호로 가게 하나 조회

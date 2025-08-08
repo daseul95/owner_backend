@@ -24,14 +24,14 @@ public class User  implements UserDetails {
     @Column(name="user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String username;
     private String loginId;
 
     private String ceoName;
 
     private String nickname;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Store> stores = new ArrayList<>();
 
     private String area;

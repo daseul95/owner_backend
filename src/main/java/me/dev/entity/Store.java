@@ -1,5 +1,6 @@
 package me.dev.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,6 +29,7 @@ public class Store {
 
     // 양방향 관계를 원할 경우
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Menu> menus = new ArrayList<>();
 
     // 편의 메서드
@@ -36,8 +38,12 @@ public class Store {
         menu.setStore(this);
     }
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
     private User owner;
     private String businessNum;
     private String postNum;

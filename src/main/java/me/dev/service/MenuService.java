@@ -3,11 +3,7 @@ package me.dev.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import me.dev.dto.payload.request.MenuRequestDto;
-import me.dev.dto.payload.request.StoreRequestDto;
-import me.dev.dto.payload.request.ToastDto;
-import me.dev.dto.payload.response.MenuOptionResponseDto;
 import me.dev.dto.payload.response.MenuResponseDto;
-import me.dev.dto.payload.response.StoreResponseDto;
 import me.dev.entity.Menu;
 import me.dev.entity.Store;
 import me.dev.repository.MenuRepository;
@@ -17,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,10 +22,19 @@ public class MenuService {
     private final StoreRepository storeRepository;
     private final MenuRepository menuRepository;
 
-    public MenuResponseDto createMenu(Long storeId, MenuRequestDto dto) {
-        Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 가게가 존재하지 않습니다."));
-
+    public Menu createMenu(Long storeId,MenuRequestDto dto) {
+        Optional<Store> optionalStore = storeRepository.findById(storeId);
+        // 1) 값이 없으면 예외 던지기
+        Store shop = optionalStore.orElseThrow(() -> new RuntimeException("스토어가 없습니다"));
+        // 2) 값이 있으면 처리, 없으면 다른 로직
+        if(optionalStore.isPresent()) {
+            Store store = optionalStore.get();
+            // 처리
+        } else {
+            // 스토어 없음 처리
+        }
+        Store store = optionalStore.orElse(null);
+        Long shopId = storeId;
         Menu menu = new Menu();
         menu.setCategory(dto.getCategory());
         menu.setName(dto.getName());
@@ -41,7 +47,7 @@ public class MenuService {
         store.getMenus().add(menu); // 양방향일 경우
 
         Menu saved = menuRepository.save(menu);
-        return new MenuResponseDto(saved);
+        return menu;
     }
 
     @Transactional
@@ -54,17 +60,23 @@ public class MenuService {
         if (dto.getWriteTime() != null) menu.setUpdated_at(dto.getWriteTime());
     }
 
-    public MenuResponseDto getStoreById(Long id) {
+    public Menu getMenuByUserId(Long id) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 메뉴를 찾을 수 없습니다."));
-        return new MenuResponseDto(menu);
+        return menu;
     }
 
 
-    public List<String> getMenuNames() {
-        List<Menu> menus = menuRepository.findAll();
+    public List<MenuResponseDto> getMenusByUserId(Long userId) {
+        List<Menu> menus = menuRepository.findByUser_Id(userId);
         return menus.stream()
-                .map(Menu::getName)  // 메뉴 이름만 뽑기
+                .map(menu -> new MenuResponseDto(
+                        menu.getId(),
+                        menu.getCategory(),
+                        menu.getName(),
+                        menu.getDes(),
+                        menu.getImgUrl(),
+                        menu.getPrice()))
                 .collect(Collectors.toList());
     }
 
@@ -74,15 +86,17 @@ public class MenuService {
         return menu.getName();
     }
 
-    public ToastDto getToastById(Long id) {
+    public MenuResponseDto getMenuById(Long id) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("메뉴 없음"));
 
-        return new ToastDto(
+        return new MenuResponseDto(
                 menu.getId(),
-                menu.getName(), // toastName에 대응
+                menu.getCategory(),
+                menu.getName(),
                 menu.getDes(),
-                menu.getImgUrl()
+                menu.getImgUrl(),
+                menu.getPrice()
         );
     }
 

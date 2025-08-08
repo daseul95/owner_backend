@@ -32,7 +32,7 @@ public class JwtTokenProvider{
     private int jwtExpirationMs=86400000;
 
     @Autowired
-    private UserService UserService;
+    private UserService userService;
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
@@ -42,7 +42,7 @@ public class JwtTokenProvider{
         User userPrincipal = (User) authentication.getPrincipal();
 
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
+                .setSubject(String.valueOf(userPrincipal.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key(), SignatureAlgorithm.HS256)
@@ -51,7 +51,7 @@ public class JwtTokenProvider{
 
     public String generateAccessToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(String.valueOf(user.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -60,7 +60,7 @@ public class JwtTokenProvider{
 
     public String generateRefreshToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(String.valueOf(user.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -86,19 +86,28 @@ public class JwtTokenProvider{
                 .parseClaimsJws(token)
                 .getBody();
 
-        return claims.getSubject(); // subject에 username이 들어있음
+        return claims.getSubject(); // 이제 userId 문자열 리턴
+
     }
 
 
 
-
-
     public Authentication getAuthentication(String token) {
-        String username = getUsernameFromToken(token);
-        User userDetails = UserService.findByEmail(username);
+        String userIdStr = getSubjectFromToken(token);
+        Long userId = Long.parseLong(userIdStr);
+
+        User userDetails = userService.findById(userId);
 
         return new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());
+    }
+    public String getSubjectFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject(); // 이제 id 나옴
     }
 
     private Key key() {

@@ -16,6 +16,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         System.out.println("CustomAuthenticationEntryPoint - 인증 실패: " + authException.getMessage());
 
         response.setContentType("application/json;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         String json = "{\"error\": \"Unauthorized\"}";
