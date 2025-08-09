@@ -42,7 +42,6 @@ public class StoreController {
     // 가게 등록
     /*  {
           "storeName": "헬로헬로",
-          "userId": 1,
           "businessNum": "070-1234-5678",
           "postNum": "06234",
           "description": "인터넷 카페입니다.",
@@ -85,33 +84,20 @@ public class StoreController {
         List<Store> stores = storeService.getStoresByUserId(userId);
 
         List<StoreResponseDto> storeDto = stores.stream()
-                .map( store -> new StoreResponseDto(store.getStoreName(),userId,store.getBusinessNum(),
+                .map( store -> new StoreResponseDto(store.getId(),store.getStoreName(),userId,store.getBusinessNum(),
                         store.getPostNum(),store.getDescription(),store.getPhone(),store.getAddress(),
                 store.getLat(),store.getLongti(),store.getImage()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(storeDto);
         }
 
-    //유저 번호로 가게 하나 조회
-//    @GetMapping("/{id}/store")
-//    public ResponseEntity<?> getStoreByUserId(@PathVariable("id") Long id) {
-//        try {
-//            Store store = storeService.getStoreByUserId(id);
-//            return ResponseEntity.ok(store);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-//        }
-//    }
-
-
     //가게 정보 수정
     /*
     {
-          "storeName": "헬로헬로",
-          "userId": 1,
+          "storeName": "헬로수정완",
           "businessNum": "070-1234-5678",
           "postNum": "06234",
-          "description": "인터넷 카페입니다.",
+          "description": "오프라인 카페입니다.",
           "phone": "02-1234-5678",
           "address": "서울특별시 동작구 어딘가",
           "lat": 43.535,

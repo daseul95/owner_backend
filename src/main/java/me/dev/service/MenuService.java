@@ -63,7 +63,6 @@ public class MenuService {
 
         if (dto.getTitle() != null) menu.setName(dto.getTitle());
         if (dto.getContents() != null) menu.setDes(dto.getContents());
-        if (dto.getWriteTime() != null) menu.setUpdated_at(dto.getWriteTime());
     }
 
     public Menu getMenuByUserId(Long id) {
@@ -85,8 +84,8 @@ public class MenuService {
                             menu.getDes(),
                             menu.getImgUrl(),
                             menu.getPrice());
-        dto.setCreatedAt(menu.getCreated_at());
-        dto.setUpdatedAt(menu.getUpdated_at());
+//        dto.setCreatedAt(menu.getCreated_at());
+//        dto.setUpdatedAt(menu.getUpdated_at());
         return dto;
                 })
                 .collect(Collectors.toList()

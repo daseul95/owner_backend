@@ -29,9 +29,10 @@ public class StoreResponseDto {
     private Timestamp updated_at;
 
     // 필요한 필드만 받는 생성자 직접 추가
-    public StoreResponseDto(String storeName,long uid, String businessNum,
+    public StoreResponseDto(Long id,String storeName,long uid, String businessNum,
                             String postNum,String description,String phone,
                             String address,float lat,float longti,String image) {
+        this.id=id;
         this.storeName=storeName;
         this.uid = uid;
         this.businessNum = businessNum;

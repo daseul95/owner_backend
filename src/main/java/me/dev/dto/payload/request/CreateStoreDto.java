@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class CreateStoreDto {
     private String storeName;
-    private Long userId;
     private String businessNum;
     private String postNum;
     private String description;

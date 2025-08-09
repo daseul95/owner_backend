@@ -43,6 +43,7 @@ public class UserContoller {
     UserDetailsService userDetailsService;
 
     // 유저 등록
+    // {"userId":"osl123o","password":"12345678"}
     @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<?> newUser(@RequestBody SignupRequest request) {
@@ -54,7 +55,7 @@ public class UserContoller {
 
     //유저 로그인
     /*
-      {"userId":"osl123o@naver.com"
+      {"userId":"osl123o"
       ,"password":"12345678"}
      */
     @PostMapping(value="/signin")
@@ -83,7 +84,7 @@ public class UserContoller {
             tokens.put("refreshToken", refreshToken);
             tokens.put("userInfo", userInfo);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(tokens);
+            return ResponseEntity.ok(tokens);
 
         } catch (BadCredentialsException ex) {
             System.err.println("로그인 실패: 비밀번호 또는 이메일이 일치하지 않음");
@@ -94,11 +95,5 @@ public class UserContoller {
         }
     }
 
-
-    @GetMapping(value="/login/error")
-    public String loginError(Model model){
-        model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요");
-        return "/member/memberLoginForm";
-    }
 
 }

@@ -26,6 +26,7 @@ public class Order {
 
     @ManyToOne
     private Store store;
+
     @Enumerated(EnumType.STRING)
     private OrderType orderType;
     private String delivery_address; // 배달일 경우만 사용

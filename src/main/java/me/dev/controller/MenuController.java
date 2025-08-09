@@ -33,7 +33,7 @@ public class MenuController {
 
 
     // 메뉴 하나 등록
-    // /{가게 번호}/menu
+    // /menu
     /*
     {
           "category" : "토스트",
@@ -57,6 +57,8 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.CREATED).body(menu);
     }
 
+
+
     // 전체 메뉴 이름 조회
     @GetMapping("/menu")
     public ResponseEntity<List<MenuResponseDto>> getMenus(@AuthenticationPrincipal User userDetails) {
@@ -66,7 +68,6 @@ public class MenuController {
     }
 
     // 메뉴 하나 조회
-    // /menu/{메뉴번호}
     @GetMapping("/menu/{id}")
     public ResponseEntity<MenuResponseDto> getMenuNameById(@PathVariable("id") Long id) {
         MenuResponseDto name = menuService.getMenuById(id);
@@ -81,7 +82,7 @@ public class MenuController {
     }
 
 
-    @DeleteMapping("/toast/{user_id}/{toast_id}/delete")
+    @DeleteMapping("/menu/{user_id}/{toast_id}/delete")
     public ResponseEntity<?> deleteToast(@PathVariable("user_id") Long userId,
                                          @PathVariable("toast_id") Long toastId) {
 

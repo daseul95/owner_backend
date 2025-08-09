@@ -1,5 +1,6 @@
 package me.dev.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class User  implements UserDetails {
 
     private String username;
 
-    @Column(name = "login_id")
+    @Column(name = "login_id",unique = true)
     private String userId;
 
     private String ceoName;
@@ -35,6 +36,7 @@ public class User  implements UserDetails {
     private String nickname;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Store> stores = new ArrayList<>();
 
     private String area;
