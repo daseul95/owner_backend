@@ -43,8 +43,6 @@ public class Store {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    private User owner;
     private String businessNum;
     private String postNum;
     private String description;

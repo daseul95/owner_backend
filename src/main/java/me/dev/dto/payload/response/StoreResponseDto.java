@@ -15,8 +15,8 @@ import java.sql.Timestamp;
 public class StoreResponseDto {
     private Long id;
     private String storeName;
-    private String ownerName;
-    private Long userId;
+    private String userId;
+    private Long uid;
     private String businessNum;
     private String postNum;
     private String description;
@@ -29,11 +29,11 @@ public class StoreResponseDto {
     private Timestamp updated_at;
 
     // 필요한 필드만 받는 생성자 직접 추가
-    public StoreResponseDto(String storeName,long userId, String businessNum,
+    public StoreResponseDto(String storeName,long uid, String businessNum,
                             String postNum,String description,String phone,
                             String address,float lat,float longti,String image) {
         this.storeName=storeName;
-        this.userId = userId;
+        this.uid = uid;
         this.businessNum = businessNum;
         this.postNum = postNum;
         this.description = description;
@@ -47,7 +47,7 @@ public class StoreResponseDto {
     public StoreResponseDto(Store store) {
         this.id = store.getId();
         this.storeName = store.getStoreName();
-        this.ownerName = store.getOwner().getName(); // User에 name 필드 있다고 가정
+        this.uid= store.getUser().getId(); // User에 name 필드 있다고 가정
         this.businessNum = store.getBusinessNum();
         this.postNum = store.getPostNum();
         this.description = store.getDescription();
