@@ -19,13 +19,13 @@ public class UserService implements UserDetailsService {
 
 
     @Override
-    public User loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
+    public User loadUserByUsername(String UserId) throws UsernameNotFoundException {
+        User user = userRepository.findByUserId(UserId);
 
         if (user == null) {
-            throw new UsernameNotFoundException("해당 이메일의 사용자를 찾을 수 없습니다 ");
+            throw new UsernameNotFoundException("해당 아이디의 이용자를 찾을 수 없습니다. ");
         }
-        System.out.println("loadUserByUsername ✅ 이메일 있음: " + user.getEmail());
+        System.out.println("loadUserByUsername ✅ 아이디 있음: " + user.getUserId());
         System.out.println("✅ 비밀번호 해시: " + user.getPassword());
 
         return user;
@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
         User user = new User();
 
         String password= passwordEncoder.encode(request.getPassword());
-        user.setLoginId(request.getUserId());
+        user.setUserId(request.getUserId());
         user.setPassword(password);
         user.setCeoName(request.getName());
         user.setEmail(request.getEmail());
@@ -50,20 +50,20 @@ public class UserService implements UserDetailsService {
     }
 
     private void validateDuplicateMember(User user) {
-        User findUser = userRepository.findByEmail(user.getEmail());
+        User findUser = userRepository.findByUserId(user.getUserId());
         if (findUser != null) {
             throw new IllegalStateException("이미 가입된 회원입니다");
         }
     }
 
-    public User findById(Long userId){
-        Optional<User> optionalUser = userRepository.findById(userId);
+    public User findById(Long Id){
+        Optional<User> optionalUser = userRepository.findById(Id);
 
         User user = optionalUser.orElseThrow(() -> new RuntimeException("유저가 없습니다"));
         return user;
     }
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByUserId(String userId) {
+        return userRepository.findByUserId(userId);
     }
 
     public User findByName(String name) {

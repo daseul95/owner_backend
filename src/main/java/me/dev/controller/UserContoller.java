@@ -54,19 +54,19 @@ public class UserContoller {
 
     //유저 로그인
     /*
-      {"email":"osl123o@naver.com"
+      {"userId":"osl123o@naver.com"
       ,"password":"12345678"}
      */
     @PostMapping(value="/signin")
     @ResponseBody
     public ResponseEntity<?> LoginUser(@RequestBody LoginRequest request) {
 
-        System.out.println(request.getEmail());
+        System.out.println(request.getUserId());
         System.out.println(request.getPassword());
 
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+                    new UsernamePasswordAuthenticationToken(request.getUserId(), request.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             User user = (User) authentication.getPrincipal();
@@ -76,7 +76,7 @@ public class UserContoller {
             // 2. 리프레시 토큰 저장
             user.setRefreshToken(refreshToken);
             userService.resaveUser(user);
-            User userInfo = userService.findByEmail(request.getEmail());
+            User userInfo = userService.findByUserId(request.getUserId());
 
             Map<String, Object> tokens = new HashMap<>();
             tokens.put("accessToken", accessToken);

@@ -2,12 +2,15 @@ package me.dev.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import me.dev.dto.payload.request.CreateMenuDTO;
 import me.dev.dto.payload.request.MenuRequestDto;
 import me.dev.dto.payload.response.MenuResponseDto;
 import me.dev.entity.Menu;
 import me.dev.entity.Store;
+import me.dev.entity.User;
 import me.dev.repository.MenuRepository;
 import me.dev.repository.StoreRepository;
+import me.dev.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +24,12 @@ public class MenuService {
 
     private final StoreRepository storeRepository;
     private final MenuRepository menuRepository;
+    private final UserRepository userRepository;
 
-    public Menu createMenu(Long storeId,MenuRequestDto dto) {
+    public Menu createMenu(Long storeId,Long userId, CreateMenuDTO dto) {
         Optional<Store> optionalStore = storeRepository.findById(storeId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(()->new IllegalArgumentException("유저를 찾을 수 없습니다"));
         // 1) 값이 없으면 예외 던지기
         Store shop = optionalStore.orElseThrow(() -> new RuntimeException("스토어가 없습니다"));
         // 2) 값이 있으면 처리, 없으면 다른 로직
@@ -34,8 +40,8 @@ public class MenuService {
             // 스토어 없음 처리
         }
         Store store = optionalStore.orElse(null);
-        Long shopId = storeId;
         Menu menu = new Menu();
+        menu.setUser(user);
         menu.setCategory(dto.getCategory());
         menu.setName(dto.getName());
         menu.setDes(dto.getDes());
@@ -68,16 +74,23 @@ public class MenuService {
 
 
     public List<MenuResponseDto> getMenusByUserId(Long userId) {
-        List<Menu> menus = menuRepository.findByUser_Id(userId);
+        List<Menu> menus = menuRepository.findByStore_User_Id(userId);
+        System.out.println("조회된 메뉴 개수 = {}"+ menus.size());
         return menus.stream()
-                .map(menu -> new MenuResponseDto(
-                        menu.getId(),
-                        menu.getCategory(),
-                        menu.getName(),
-                        menu.getDes(),
-                        menu.getImgUrl(),
-                        menu.getPrice()))
-                .collect(Collectors.toList());
+                .map(menu -> {
+                    MenuResponseDto dto = new MenuResponseDto(
+                            menu.getId(),
+                            menu.getCategory(),
+                            menu.getName(),
+                            menu.getDes(),
+                            menu.getImgUrl(),
+                            menu.getPrice());
+        dto.setCreatedAt(menu.getCreated_at());
+        dto.setUpdatedAt(menu.getUpdated_at());
+        return dto;
+                })
+                .collect(Collectors.toList()
+                );
     }
 
     public String getMenuNameById(Long menuId) {

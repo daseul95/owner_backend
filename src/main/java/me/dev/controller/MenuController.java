@@ -1,6 +1,7 @@
 package me.dev.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.dev.dto.payload.request.CreateMenuDTO;
 import me.dev.dto.payload.request.MenuRequestDto;
 import me.dev.dto.payload.request.StoreRequestDto;
 import me.dev.dto.payload.response.MenuResponseDto;
@@ -46,13 +47,13 @@ public class MenuController {
     @PostMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> createMenu(
             @AuthenticationPrincipal User userDetails,
-            @RequestBody MenuRequestDto dto
+            @RequestBody CreateMenuDTO dto
     ) {
         Long userId = userDetails.getId();
         System.out.println("Menu 생성할 때 들어온 userId : " + userId);
         Long storeId = storeService.getStoreIdByUserId(userId);
         System.out.println("Menu 생성할 때 찾아낸 storeId : " + storeId);
-        Menu menu = menuService.createMenu(storeId,dto);
+        Menu menu = menuService.createMenu(storeId,userId,dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(menu);
     }
 
