@@ -39,7 +39,7 @@ public class StoreController {
     private UserService userService;
 
 
-    // 가게 등록
+    // 가게 등록 (POST)
     /*  {
           "storeName": "헬로헬로",
           "businessNum": "070-1234-5678",
@@ -64,7 +64,8 @@ public class StoreController {
     }
 
 
-    //가게 번호로 가게 하나 조회
+    //가게 번호로 가게 하나 조회 (GET)
+
     @GetMapping(value = "/store/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<StoreResponseDto> getStore(@PathVariable("id") Long id) {
@@ -74,7 +75,7 @@ public class StoreController {
     }
 
 
-      //가게 모두 조회
+      //가게 모두 조회 (GET)
     @GetMapping("/store")
     public ResponseEntity<?> getStores(@AuthenticationPrincipal User userDetails) {
         // 로그인한 유저 ID 가져오기
@@ -91,7 +92,7 @@ public class StoreController {
         return ResponseEntity.ok(storeDto);
         }
 
-    //가게 정보 수정
+    //가게 정보 수정 (PUT)
     /*
     {
           "storeName": "헬로수정완",
@@ -112,7 +113,7 @@ public class StoreController {
         return ResponseEntity.ok(dto);
     }
 
-  //가게 정보 삭제
+  //가게 정보 삭제 (DELETE)
     @DeleteMapping("/store/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable("id") Long id) {
 

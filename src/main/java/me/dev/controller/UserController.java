@@ -38,7 +38,7 @@ public class UserController {
     @Autowired
     UserDetailsService userDetailsService;
 
-    // 유저 등록
+    // 유저 등록 (POST)
     // {"userId":"osl123o","password":"12345678"}
     @PostMapping("/signup")
     @ResponseBody
@@ -49,7 +49,7 @@ public class UserController {
     }
 
 
-    //유저 로그인
+    //유저 로그인 (POST)
     /*
       {"userId":"osl123o"
       ,"password":"12345678"}

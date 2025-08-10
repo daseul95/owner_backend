@@ -2,6 +2,7 @@ package me.dev.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import me.dev.dto.payload.DTO.MenuDto;
 import me.dev.dto.payload.request.CreateMenuDTO;
 import me.dev.dto.payload.request.MenuRequestDto;
 import me.dev.dto.payload.response.MenuResponseDto;
@@ -56,13 +57,18 @@ public class MenuService {
         return menu;
     }
 
-    @Transactional
-    public void updateMenu(Long id, MenuRequestDto dto) {
+
+    public Menu updateMenu(Long id, MenuDto dto) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(("메뉴를 찾을수 없습니다")));
 
-        if (dto.getTitle() != null) menu.setName(dto.getTitle());
-        if (dto.getContents() != null) menu.setDes(dto.getContents());
+        if (dto.getCategory() != null) menu.setCategory(dto.getCategory());
+        if (dto.getName() != null) menu.setName(dto.getName());
+        if (dto.getDes() != null) menu.setDes(dto.getDes());
+        if (dto.getImgUrl() != null) menu.setImgUrl(dto.getImgUrl());
+        if (dto.getPrice() != 0) menu.setPrice(dto.getPrice());
+
+        return menuRepository.save(menu);
     }
 
     public Menu getMenuByUserId(Long id) {

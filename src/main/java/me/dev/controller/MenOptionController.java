@@ -29,11 +29,11 @@ public class MenOptionController {
 
     /*
     {"optionGroup" : 3,
-    "name" : "양상추 빼기",
+    "name" : "토마토 빼기",
     "optionPrice" : 0
     }
      */
-    // 옵션 그룹(토핑)에 옵션 추가
+    // 옵션 그룹(토핑)에 옵션 추가 (POST)
     // /menuOption
     @PostMapping("/menuOption")
     @ResponseBody

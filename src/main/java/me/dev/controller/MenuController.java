@@ -1,6 +1,7 @@
 package me.dev.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.dev.dto.payload.DTO.MenuDto;
 import me.dev.dto.payload.request.CreateMenuDTO;
 import me.dev.dto.payload.request.MenuRequestDto;
 import me.dev.dto.payload.request.StoreRequestDto;
@@ -32,7 +33,7 @@ public class MenuController {
 
 
 
-    // 메뉴 하나 등록
+    // 메뉴 하나 등록 (POST)
     // /menu
     /*
     {
@@ -50,16 +51,14 @@ public class MenuController {
             @RequestBody CreateMenuDTO dto
     ) {
         Long userId = userDetails.getId();
-        System.out.println("Menu 생성할 때 들어온 userId : " + userId);
         Long storeId = storeService.getStoreIdByUserId(userId);
-        System.out.println("Menu 생성할 때 찾아낸 storeId : " + storeId);
         Menu menu = menuService.createMenu(storeId,userId,dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(menu);
     }
 
 
 
-    // 전체 메뉴 이름 조회
+    // 전체 메뉴 이름 조회 (GET)
     @GetMapping("/menu")
     public ResponseEntity<List<MenuResponseDto>> getMenus(@AuthenticationPrincipal User userDetails) {
         Long userId = userDetails.getId();
@@ -67,26 +66,38 @@ public class MenuController {
         return ResponseEntity.ok(menus);
     }
 
-    // 메뉴 하나 조회
+    // 메뉴 하나 조회 (GET)
+    // /menu/{메뉴번호}
     @GetMapping("/menu/{id}")
     public ResponseEntity<MenuResponseDto> getMenuNameById(@PathVariable("id") Long id) {
         MenuResponseDto name = menuService.getMenuById(id);
         return ResponseEntity.ok(name);
     }
 
-    // 메뉴 하나 수정
+    /*
+        {
+          "category" : "토스트",
+          "name":"치즈 토스트",
+          "des":"치즈가 들어가있어요",
+          "imgUrl":"C://example.toast/ham",
+          "price":6000
+        }
+     */
+    // 메뉴 하나 수정 (PUT)
+    // /menu/{메뉴번호}
     @PutMapping("/menu/{id}")
-    public ResponseEntity<?> updateMenu(@PathVariable("id") Long id, @RequestBody MenuRequestDto dto) {
-        menuService.updateMenu(id, dto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> updateMenu(@PathVariable("id") Long id, @RequestBody MenuDto dto) {
+        Menu updateMenu = menuService.updateMenu(id, dto);
+        return ResponseEntity.ok(updateMenu);
     }
 
 
-    @DeleteMapping("/menu/{user_id}/{toast_id}/delete")
-    public ResponseEntity<?> deleteToast(@PathVariable("user_id") Long userId,
-                                         @PathVariable("toast_id") Long toastId) {
+    //메뉴 하나 삭제 (DELETE)
+    // /menu/{메뉴번호}
+    @DeleteMapping("/menu/{id}")
+    public ResponseEntity<?> deleteToast(@PathVariable("id") Long id) {
 
-        menuService.deleteMenu(toastId);
+        menuService.deleteMenu(id);
         return ResponseEntity.noContent().build(); // 204 No Content
     }
 
