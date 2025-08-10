@@ -39,8 +39,6 @@ public class MenuOptionGroup {
     }
 
     private boolean isRequired;
-    private int minSelect;
-    private int maxSelect;
 
 
     public MenuOptionGroup(Menu menu, OptionGroup group) {

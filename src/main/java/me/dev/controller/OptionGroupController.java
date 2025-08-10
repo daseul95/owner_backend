@@ -1,9 +1,12 @@
 package me.dev.controller;
 
+import me.dev.dto.payload.DTO.OptionGroupDto;
 import me.dev.entity.MenuOption;
 import me.dev.entity.OptionGroup;
 import me.dev.repository.MenuOptionRepository;
 import me.dev.repository.OptionGroupRepository;
+import me.dev.service.MenuOptionService;
+import me.dev.service.OptionGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,9 @@ public class OptionGroupController {
     @Autowired
     private MenuOptionRepository menuOptionRepository;
 
+    @Autowired
+    private OptionGroupService optionGroupService;
+
     // 옵션 그룹 추가
   /*
   {
@@ -28,21 +34,14 @@ public class OptionGroupController {
          "description":"맛을 더해줍니다"    }
   */
     @PostMapping("/optionGroup")
-    public OptionGroup createGroup(@RequestBody OptionGroup group) {
+    public OptionGroup createGroup(@RequestBody OptionGroupDto dto) {
+
+        OptionGroup group = optionGroupService.createOptionGroup(dto);
+
         return optionGroupRepository.save(group);
     }
 
 
-    // 옵션 그룹(토핑)에 옵션 추가
-    @PostMapping("/{groupId}/{menuOptionId}")
-    public MenuOption addOption(@PathVariable("groupId") Long groupId, @PathVariable("menuOptionId") Long menuOptionId) {
-        OptionGroup group = optionGroupRepository.findById(groupId)
-                .orElseThrow(() -> new IllegalArgumentException("옵션 그룹 없음"));
-        MenuOption option = menuOptionRepository. findById(menuOptionId)
-                .orElseThrow(()->new NoSuchElementException("MenuOption with id " + menuOptionId + " not found"));
-        option.setOptionGroup(group);
-        return menuOptionRepository.save(option);
-    }
 
     // 그룹 전체 조회
 //    @GetMapping

@@ -109,7 +109,7 @@ public class StoreController {
     @PutMapping("/store/{id}")
     public ResponseEntity<?> updateStore(@PathVariable("id") Long id, @RequestBody CreateStoreDto dto) {
         storeService.updateStore(id, dto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(dto);
     }
 
   //가게 정보 삭제

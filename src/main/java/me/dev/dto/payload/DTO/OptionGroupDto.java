@@ -12,6 +12,7 @@ import me.dev.entity.OptionGroup;
 @NoArgsConstructor
 public class OptionGroupDto {
     private Long id;
+
     private String name;
     private String description;
     // 옵션 리스트도 필요하면 DTO로 포함 가능 (생략 가능)
@@ -24,5 +25,4 @@ public class OptionGroupDto {
         // 필요하면 options도 DTO 리스트로 변환해서 넣을 수 있음
     }
 
-    // getter, setter 생략
 }

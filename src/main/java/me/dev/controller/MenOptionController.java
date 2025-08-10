@@ -1,9 +1,6 @@
 package me.dev.controller;
 
-import lombok.RequiredArgsConstructor;
-import me.dev.dto.payload.DTO.MenuOptionGroupDto;
-import me.dev.dto.payload.request.MenuOptionRequestDto;
-import me.dev.dto.payload.response.MenuOptionResponseDto;
+import me.dev.dto.payload.request.CreateMenuOptionDto;
 import me.dev.entity.MenuOption;
 import me.dev.entity.OptionGroup;
 import me.dev.repository.MenuOptionRepository;
@@ -11,16 +8,14 @@ import me.dev.repository.OptionGroupRepository;
 import me.dev.service.MenuOptionGroupService;
 import me.dev.service.MenuOptionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping
-public class MenuOptionGroupController {
+public class MenOptionController {
+
 
     @Autowired
     private OptionGroupRepository optionGroupRepository;
@@ -29,21 +24,22 @@ public class MenuOptionGroupController {
     @Autowired
     private MenuOptionGroupService menuOptionGroupService;
 
-    
-    //메뉴 옵션 그룹 생성
-    /*
-    {
-      "menuId":1,
-      "optionGroup": 1
-     }
-     */
-    @PostMapping("/MenuOptionGroup")
-    @ResponseBody
-    public ResponseEntity<MenuOptionGroupDto> createMenuOptionGroup(
-            @RequestBody MenuOptionGroupDto dto) {
+    @Autowired
+    private MenuOptionService menuOptionService;
 
-        MenuOptionGroupDto response = menuOptionGroupService.createMenuOptionGroup(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    /*
+    {"optionGroup" : 3,
+    "name" : "양상추 빼기",
+    "optionPrice" : 0
+    }
+     */
+    // 옵션 그룹(토핑)에 옵션 추가
+    // /menuOption
+    @PostMapping("/menuOption")
+    @ResponseBody
+    public ResponseEntity<?> addOption(@RequestBody CreateMenuOptionDto dto) {
+        MenuOption option= menuOptionService.createMenuOption(dto);
+        return ResponseEntity.ok(option);
     }
 
 }
