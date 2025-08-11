@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import me.dev.dto.payload.request.OrderMenuRequestDto;
 import me.dev.dto.payload.request.OrderRequestDto;
+import me.dev.dto.payload.response.OrderResponseDto;
 import me.dev.entity.*;
 import me.dev.entity.enumerator.OrderStatus;
 import me.dev.repository.MenuOptionRepository;
@@ -30,19 +31,20 @@ public class OrderService {
     public Order createOrder(OrderRequestDto request) {
 
         // 1. 가게 확인
-        Store store = storeRepository.findById(request.getStoreId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 가게 없음"));
+//        Store store = storeRepository.findById(request.getStoreId())
+//                .orElseThrow(() -> new IllegalArgumentException("해당 가게 없음"));
 
         // 2. 주문 엔티티 생성
         Order order = new Order();
-        order.setStore(store);
-        order.setCustomer(request.getCustomer());
-        order.setOrderType(request.getOrderType());
+//        order.setStore(store);
+//        order.setCustomer(request.getCustomer());
+//        order.setOrderType(request.getOrderType());
         order.setOrderStatus(OrderStatus.WAITING);
         order.setCreate_at(Timestamp.valueOf(LocalDateTime.now()));
 
         List<OrderMenu> orderMenus = new ArrayList<>();
         int totalPrice = 0;
+
 
         // 3. 주문 아이템 처리
         for (OrderMenuRequestDto  itemRequest : request.getOrderMenus()) {
@@ -61,6 +63,9 @@ public class OrderService {
                 String optionName = optionDto.getOptionName();  // 프론트에서 받은 옵션명
 
                 MenuOption menuOption = menuOptionRepository.findByName(optionName);
+                if (menuOption == null) {
+                    throw new IllegalArgumentException("해당 옵션이 존재하지 않습니다: " + optionName);
+                }
                 SelectedMenuOption selectedOption = new SelectedMenuOption();
                 selectedOption.setMenuOption(menuOption);
                 selectedOption.setOptionPrice(menuOption.getOptionPrice());  // 옵션 가격 세팅
@@ -84,6 +89,7 @@ public class OrderService {
         }
         order.setOrderMenus(orderMenus);
         order.setTotalPrice(totalPrice);
+
         return orderRepository.save(order);
 //            // 4. 옵션 처리 (주문 메뉴에 딸린 옵션)
 //

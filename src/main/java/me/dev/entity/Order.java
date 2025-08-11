@@ -21,6 +21,8 @@ public class Order {
     @Column(name="order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long customerId;
     private String customer;
     private String customerPhone;
 

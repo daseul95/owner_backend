@@ -52,7 +52,7 @@ public class Store {
     private String address;
     private Float lat;
     private Float longti;
-    @Nullable
+    @Column(nullable = true)
     private String image;
 
 

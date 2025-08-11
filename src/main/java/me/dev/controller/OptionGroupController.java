@@ -44,18 +44,5 @@ public class OptionGroupController {
 
 
     // 그룹 전체 조회
-//    @GetMapping
-//    public List<OptionGroup> getGroups() {
-//        return optionGroupRepository.findAll();
-//    }
-
-
-
-//
-//    @GetMapping
-//    public List<OptionGroup> getAllOptionGroups() {
-//        return optionGroupRepository.findAll();
-//    }
-
 
 }

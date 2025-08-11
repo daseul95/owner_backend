@@ -7,12 +7,18 @@ import me.dev.entity.enumerator.OrderStatus;
 import me.dev.entity.enumerator.OrderType;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 public class OrderResponseDto {
-    private Long orderId;
+
+    private Long id;
+    private Long customerId;
+    private List<OrderMenuRequestDto> orderMenus;
+    private LocalDateTime createdAt;
+
     private String customer;
     private String customerPhone;
     private String storeName;
@@ -21,8 +27,6 @@ public class OrderResponseDto {
     private OrderStatus orderStatus;
     private int totalPrice;
     private String deliveryAddress;
-    private List<OrderMenuRequestDto> orderMenus;
     private String paymentMethod;
 
-    private Timestamp createdAt;
 }

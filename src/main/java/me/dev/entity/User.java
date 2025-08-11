@@ -31,8 +31,6 @@ public class User  implements UserDetails {
     @Column(name = "login_id",unique = true)
     private String userId;
 
-    private String ceoName;
-
     private String nickname;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -76,22 +74,22 @@ public class User  implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 
     public Long getId() {
@@ -99,6 +97,6 @@ public class User  implements UserDetails {
     }
 
     public String getName() {
-        return this.ceoName;
+        return this.username;
     }
 }

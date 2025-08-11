@@ -16,49 +16,52 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    //오더 받기 (POST)
     /*
-{
-  "customer": "김다슬",
-  "customerPhone": "010-1234-5678",
-  "storeId": 1,
-  "orderType": "DELIVERY",
-  "deliveryAddress": "서울시 강남구 어딘가",
-  "paymentMethod": "CARD",
+  {
+   "id":1,
+  "customerId": 1001,
   "orderMenus": [
     {
-      "menuId": 101,
+      "menuId": 1,
       "quantity": 2,
       "selectedOptions": [
         {
           "optionName": "치즈 추가",
-          "optionPrice": 500
+          "optionPrice": 1000
         },
         {
           "optionName": "베이컨 추가",
-          "optionPrice": 1000
-        } ] },
+          "optionPrice": 1500
+        }
+      ]
+    },
     {
-      "menuId": 102,
+      "menuId": 2,
       "quantity": 1,
       "selectedOptions": [
         {
-          "optionName": "곱빼기",
-          "optionPrice": 1500
-        } ] } ]  }
+          "optionName": "버섯 추가",
+          "optionPrice": 1200
+        }
+      ]
+    }
+  ],
+  "created_at": "2025-08-11T15:30:00"
+}
+
      */
     @PostMapping("/order")
     @ResponseBody
     public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderRequestDto request) {
 
         Order order = orderService.createOrder(request);
+
         OrderResponseDto dto = new OrderResponseDto();
-        dto.setCustomer(request.getCustomer());
-        dto.setCustomerPhone(request.getCustomerPhone());
-        dto.setStoreId(request.getStoreId());
-        dto.setOrderType(request.getOrderType());
-        dto.setDeliveryAddress(request.getDeliveryAddress());
+        dto.setId(request.getId());
+        dto.setCustomerId(request.getCustomerId());
         dto.setOrderMenus(request.getOrderMenus());
-        dto.setPaymentMethod(request.getPaymentMethod());
+        dto.setCreatedAt(request.getCreated_at());
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
