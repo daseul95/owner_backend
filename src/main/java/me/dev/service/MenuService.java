@@ -42,8 +42,6 @@ public class MenuService {
         }
         Store store = optionalStore.orElse(null);
         Menu menu = new Menu();
-        menu.setUser(user);
-        menu.setCategory(dto.getCategory());
         menu.setName(dto.getName());
         menu.setDes(dto.getDes());
         menu.setImgUrl(dto.getImgUrl());
@@ -62,7 +60,6 @@ public class MenuService {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(("메뉴를 찾을수 없습니다")));
 
-        if (dto.getCategory() != null) menu.setCategory(dto.getCategory());
         if (dto.getName() != null) menu.setName(dto.getName());
         if (dto.getDes() != null) menu.setDes(dto.getDes());
         if (dto.getImgUrl() != null) menu.setImgUrl(dto.getImgUrl());
@@ -85,7 +82,6 @@ public class MenuService {
                 .map(menu -> {
                     MenuResponseDto dto = new MenuResponseDto(
                             menu.getId(),
-                            menu.getCategory(),
                             menu.getName(),
                             menu.getDes(),
                             menu.getImgUrl(),
@@ -110,7 +106,6 @@ public class MenuService {
 
         return new MenuResponseDto(
                 menu.getId(),
-                menu.getCategory(),
                 menu.getName(),
                 menu.getDes(),
                 menu.getImgUrl(),

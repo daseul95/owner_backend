@@ -9,13 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateMenuOptionDto {
+public class CreateOptionDto {
 
-    private Long optionGroup;
-    private String optionGroupName;
+
     private String name;
-    private String category;
     private int optionPrice;
     private String des;
+    private String imgUrl;
 
 }

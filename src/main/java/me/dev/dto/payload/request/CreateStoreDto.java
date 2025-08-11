@@ -3,6 +3,8 @@ package me.dev.dto.payload.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class CreateStoreDto {
@@ -15,5 +17,7 @@ public class CreateStoreDto {
     private Float lat;
     private Float longti;
     private String image;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 
 }

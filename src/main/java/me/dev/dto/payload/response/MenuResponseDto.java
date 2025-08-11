@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 public class MenuResponseDto {
 
     private Long menuId;
-    private String category;
     private String name;
     private String des;
     private String imgUrl;
@@ -23,10 +22,9 @@ public class MenuResponseDto {
     // Optional: 가게 이름도 포함 가능
     private String storeName;
 
-    public MenuResponseDto(Long menuId,String category,String name,String des,String imgUrl,
+    public MenuResponseDto(Long menuId,String name,String des,String imgUrl,
                            int price) {
         this.menuId = menuId;
-        this.category = category;
         this.name = name;
         this.des = des;
         this.imgUrl = imgUrl;

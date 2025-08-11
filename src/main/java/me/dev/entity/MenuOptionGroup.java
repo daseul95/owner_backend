@@ -1,6 +1,7 @@
 package me.dev.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,10 +29,12 @@ public class MenuOptionGroup {
 
     @ManyToOne
     @JoinColumn(name = "menu_id")
+    @JsonBackReference
     private Menu menu;
 
     @ManyToOne
     @JoinColumn(name = "option_group_id")
+    @JsonBackReference
     private OptionGroup optionGroup;
 
     public MenuOptionGroup(OptionGroup optionGroup){

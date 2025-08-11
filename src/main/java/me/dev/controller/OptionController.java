@@ -1,31 +1,28 @@
 package me.dev.controller;
 
-import me.dev.dto.payload.request.CreateMenuOptionDto;
-import me.dev.entity.MenuOption;
-import me.dev.entity.OptionGroup;
-import me.dev.repository.MenuOptionRepository;
+import me.dev.dto.payload.request.CreateOptionDto;
+import me.dev.entity.Option;
+import me.dev.repository.OptionRepository;
 import me.dev.repository.OptionGroupRepository;
 import me.dev.service.MenuOptionGroupService;
-import me.dev.service.MenuOptionService;
+import me.dev.service.OptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.NoSuchElementException;
-
 @RestController
-public class MenOptionController {
+public class OptionController {
 
 
     @Autowired
     private OptionGroupRepository optionGroupRepository;
     @Autowired
-    private MenuOptionRepository menuOptionRepository;
+    private OptionRepository optionRepository;
     @Autowired
     private MenuOptionGroupService menuOptionGroupService;
 
     @Autowired
-    private MenuOptionService menuOptionService;
+    private OptionService optionService;
 
     /*
     {"optionGroup" : 3,
@@ -37,8 +34,8 @@ public class MenOptionController {
     // /menuOption
     @PostMapping("/menuOption")
     @ResponseBody
-    public ResponseEntity<?> addOption(@RequestBody CreateMenuOptionDto dto) {
-        MenuOption option= menuOptionService.createMenuOption(dto);
+    public ResponseEntity<?> addOption(@RequestBody CreateOptionDto dto) {
+        Option option= optionService.createOption(dto);
         return ResponseEntity.ok(option);
     }
 

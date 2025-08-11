@@ -42,7 +42,13 @@ public class UserController {
     public ResponseEntity<?> newUser(@RequestBody SignupRequest request) {
 
         User savedUser = userService.createUser(request,passwordEncoder);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+        UserResponseDto userDto = new UserResponseDto();
+        userDto.setUserId(savedUser.getUserId());
+        userDto.setEmail(savedUser.getEmail());
+        userDto.setName(savedUser.getName());
+        userDto.setNickname(savedUser.getNickname());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
     }
 
 

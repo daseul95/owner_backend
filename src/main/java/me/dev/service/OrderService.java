@@ -4,16 +4,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import me.dev.dto.payload.request.OrderMenuRequestDto;
 import me.dev.dto.payload.request.OrderRequestDto;
-import me.dev.dto.payload.response.OrderResponseDto;
 import me.dev.entity.*;
 import me.dev.entity.enumerator.OrderStatus;
-import me.dev.repository.MenuOptionRepository;
+import me.dev.repository.OptionRepository;
 import me.dev.repository.MenuRepository;
 import me.dev.repository.OrderRepository;
 import me.dev.repository.StoreRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,7 @@ public class OrderService {
 
     private final StoreRepository storeRepository;
     private final MenuRepository menuRepository;
-    private final MenuOptionRepository menuOptionRepository;
+    private final OptionRepository optionRepository;
     private final OrderRepository orderRepository;
 
     @Transactional
@@ -40,7 +38,7 @@ public class OrderService {
 //        order.setCustomer(request.getCustomer());
 //        order.setOrderType(request.getOrderType());
         order.setOrderStatus(OrderStatus.WAITING);
-        order.setCreate_at(Timestamp.valueOf(LocalDateTime.now()));
+        order.setCreate_at(LocalDateTime.now());
 
         List<OrderMenu> orderMenus = new ArrayList<>();
         int totalPrice = 0;
@@ -62,13 +60,13 @@ public class OrderService {
             for (OrderMenuRequestDto.SelectedOptionDto optionDto : itemRequest.getSelectedOptions()) {
                 String optionName = optionDto.getOptionName();  // 프론트에서 받은 옵션명
 
-                MenuOption menuOption = menuOptionRepository.findByName(optionName);
-                if (menuOption == null) {
+                Option option = optionRepository.findByName(optionName);
+                if (option == null) {
                     throw new IllegalArgumentException("해당 옵션이 존재하지 않습니다: " + optionName);
                 }
                 SelectedMenuOption selectedOption = new SelectedMenuOption();
-                selectedOption.setMenuOption(menuOption);
-                selectedOption.setOptionPrice(menuOption.getOptionPrice());  // 옵션 가격 세팅
+                selectedOption.setOption(option);
+                selectedOption.setOptionPrice(option.getOptionPrice());  // 옵션 가격 세팅
                 selectedOption.setOrderMenu(orderMenu); // 연관관계 설정
 
                 selectedOptions.add(selectedOption);

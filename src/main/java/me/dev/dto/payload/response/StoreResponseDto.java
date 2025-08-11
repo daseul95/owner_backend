@@ -7,6 +7,7 @@ import lombok.Setter;
 import me.dev.entity.Store;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,8 +26,8 @@ public class StoreResponseDto {
     private Float lat;
     private Float longti;
     private String image;
-    private Timestamp created_at;
-    private Timestamp updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     // 필요한 필드만 받는 생성자 직접 추가
     public StoreResponseDto(Long id,String storeName,long uid, String businessNum,
@@ -57,7 +58,7 @@ public class StoreResponseDto {
         this.lat = store.getLat();
         this.longti = store.getLongti();
         this.image = store.getImage() != null ? store.getImage().toString() : null;
-        this.created_at = store.getCreated_at();
-        this.updated_at = store.getUpdated_at();
+        this.createdAt = store.getCreatedAt();
+        this.updatedAt = store.getUpdatedAt();
     }
 }

@@ -92,10 +92,6 @@ public class User  implements UserDetails {
         return true;
     }
 
-    public Long getId() {
-        return this.id;
-    }
-
     public String getName() {
         return this.username;
     }

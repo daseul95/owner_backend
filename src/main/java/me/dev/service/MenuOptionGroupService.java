@@ -2,14 +2,11 @@ package me.dev.service;
 
 import lombok.RequiredArgsConstructor;
 import me.dev.dto.payload.DTO.MenuOptionGroupDto;
-import me.dev.dto.payload.request.MenuOptionRequestDto;
-import me.dev.dto.payload.request.MenuRequestDto;
 import me.dev.entity.Menu;
-import me.dev.entity.MenuOption;
 import me.dev.entity.MenuOptionGroup;
 import me.dev.entity.OptionGroup;
 import me.dev.repository.MenuOptionGroupRepository;
-import me.dev.repository.MenuOptionRepository;
+import me.dev.repository.OptionRepository;
 import me.dev.repository.MenuRepository;
 import me.dev.repository.OptionGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +23,7 @@ public class MenuOptionGroupService {
     @Autowired
     private MenuOptionGroupRepository menuoptionGroupRepository;
     @Autowired
-    private MenuOptionRepository menuOptionRepository;
+    private OptionRepository optionRepository;
 
     public MenuOptionGroupDto createMenuOptionGroup(MenuOptionGroupDto dto) {
         Menu menu = menuRepository.findById(dto.getMenuId())

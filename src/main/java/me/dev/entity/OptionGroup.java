@@ -25,16 +25,9 @@ public class OptionGroup {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "optionGroup", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "optionGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<MenuOption> options = new ArrayList<>();
-
-
-    public void addOption(MenuOption option) {
-        options.add(option);
-//        option.setOptionGroup(this);
-    }
-
+    private List<OptionGroupOption> optionGroupOptions = new ArrayList<>();
 
 
 }

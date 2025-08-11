@@ -1,19 +1,12 @@
 package me.dev.controller;
 
 import me.dev.dto.payload.DTO.OptionGroupDto;
-import me.dev.entity.MenuOption;
 import me.dev.entity.OptionGroup;
-import me.dev.repository.MenuOptionRepository;
+import me.dev.repository.OptionRepository;
 import me.dev.repository.OptionGroupRepository;
-import me.dev.service.MenuOptionService;
 import me.dev.service.OptionGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping
@@ -22,7 +15,7 @@ public class OptionGroupController {
     @Autowired
     private OptionGroupRepository optionGroupRepository;
     @Autowired
-    private MenuOptionRepository menuOptionRepository;
+    private OptionRepository optionRepository;
 
     @Autowired
     private OptionGroupService optionGroupService;

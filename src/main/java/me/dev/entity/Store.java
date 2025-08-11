@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -56,18 +58,9 @@ public class Store {
     private String image;
 
 
-    private Timestamp created_at;
-    private Timestamp updated_at;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
-    @PrePersist
-    protected void onCreate() {
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        created_at = now;
-        updated_at = now;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updated_at = Timestamp.valueOf(LocalDateTime.now());
-    }
 }

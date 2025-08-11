@@ -6,8 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 import me.dev.entity.enumerator.OrderStatus;
 import me.dev.entity.enumerator.OrderType;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.jndi.JndiLocatorDelegate;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +46,10 @@ public class Order {
     private OrderStatus orderStatus = OrderStatus.WAITING;
     private int totalPrice;
     private String payment_method;
-    private Timestamp create_at;
-    private Timestamp updated_at;
+
+    @CreationTimestamp
+    private LocalDateTime create_at;
+
+    @UpdateTimestamp
+    private LocalDateTime updated_at;
 }

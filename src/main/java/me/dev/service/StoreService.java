@@ -44,8 +44,8 @@ public class StoreService {
                 .lat(dto.getLat())
                 .longti(dto.getLongti())
                 .image(dto.getImage())
-                .created_at(Timestamp.valueOf(LocalDateTime.now()))
-                .updated_at(Timestamp.valueOf(LocalDateTime.now()))
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
 
         storeRepository.save(store);
@@ -70,7 +70,10 @@ public class StoreService {
     public StoreResponseDto getStoreById(Long id) {
         Store store = storeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 가게를 찾을 수 없습니다."));
-        return new StoreResponseDto(store);
+        StoreResponseDto storeDto = new StoreResponseDto();
+        storeDto.setCreatedAt(storeDto.getCreatedAt());
+        storeDto.setUpdatedAt(storeDto.getUpdatedAt());
+        return storeDto;
     }
 
 

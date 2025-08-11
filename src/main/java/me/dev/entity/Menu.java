@@ -32,11 +32,6 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JsonIgnore
-    private User user;
-
-    private String category;
     private String name;
     private String des;
     private String imgUrl;
@@ -47,9 +42,6 @@ public class Menu {
     @JsonBackReference
     private Store store;
 
-//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<MenuOption> options = new ArrayList<>();
-
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     @JsonIgnore
     @JsonManagedReference
@@ -57,32 +49,5 @@ public class Menu {
 
 }
 
-//    // 옵션 추가 편의 메서드
-//    public void addOption(MenuOptionGroup group) {
-//        menuOptionGroups.add(group);
-//        group.setMenu(this);
-//    }
-//
-//    // 옵션 제거 편의 메서드 (필요하면)
-//    public void removeOption(MenuOptionGroup group) {
-//        menuOptionGroups.remove(group);
-//        group.setMenu(null);
-//    }
-
-
-//    @CreationTimestamp
-//    @Column(updatable = false)
-//    private Timestamp created_at;
-//
-//    @UpdateTimestamp
-//    private Timestamp updated_at;
-
-    // === 편의 메서드 ===
-//    public void setStore(Store store) {
-//        this.store = store;
-//        if (!store.getMenus().contains(this)) {
-//            store.getMenus().add(this);
-//        }
-//    }
 
 

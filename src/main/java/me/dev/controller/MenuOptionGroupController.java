@@ -2,20 +2,13 @@ package me.dev.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.dev.dto.payload.DTO.MenuOptionGroupDto;
-import me.dev.dto.payload.request.MenuOptionRequestDto;
-import me.dev.dto.payload.response.MenuOptionResponseDto;
-import me.dev.entity.MenuOption;
-import me.dev.entity.OptionGroup;
-import me.dev.repository.MenuOptionRepository;
+import me.dev.repository.OptionRepository;
 import me.dev.repository.OptionGroupRepository;
 import me.dev.service.MenuOptionGroupService;
-import me.dev.service.MenuOptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +18,7 @@ public class MenuOptionGroupController {
     @Autowired
     private OptionGroupRepository optionGroupRepository;
     @Autowired
-    private MenuOptionRepository menuOptionRepository;
+    private OptionRepository optionRepository;
     @Autowired
     private MenuOptionGroupService menuOptionGroupService;
 

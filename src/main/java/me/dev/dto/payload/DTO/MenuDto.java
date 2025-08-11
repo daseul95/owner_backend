@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class MenuDto {
 
     private Long id;
-    private String category;
     private String name;
     private String des;
     private String imgUrl;
@@ -30,7 +29,6 @@ public class MenuDto {
     // Menu 엔티티를 받아서 DTO로 변환하는 생성자
     public MenuDto(Menu menu) {
         this.id = menu.getId();
-        this.category = menu.getCategory();
         this.name = menu.getName();
         this.des = menu.getDes();
         this.imgUrl = menu.getImgUrl();

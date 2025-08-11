@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="selected_menu_option")
+@Table(name="selected_option")
 public class SelectedMenuOption {
 
     @Id
@@ -19,7 +19,7 @@ public class SelectedMenuOption {
     private OrderMenu orderMenu;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private MenuOption menuOption;
+    private Option option;
 
     private int quantity;
     private int optionPrice;
