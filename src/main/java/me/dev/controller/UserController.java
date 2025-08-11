@@ -78,7 +78,6 @@ public class UserController {
 
             UserResponseDto userDto = new UserResponseDto();
             userDto.setUserId(userInfo.getUserId());
-            userDto.setPassword(userInfo.getPassword());
             userDto.setName(userInfo.getCeoName());
             userDto.setNickname(userInfo.getNickname());
 
