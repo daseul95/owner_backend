@@ -3,7 +3,7 @@ package me.dev.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import me.dev.dto.payload.request.OrderMenuRequestDto;
-import me.dev.dto.payload.request.OrderRequest;
+import me.dev.dto.payload.request.OrderRequestDto;
 import me.dev.entity.*;
 import me.dev.entity.enumerator.OrderStatus;
 import me.dev.repository.MenuOptionRepository;
@@ -27,7 +27,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     @Transactional
-    public void createOrder(OrderRequest request) {
+    public Order createOrder(OrderRequestDto request) {
 
         // 1. 가게 확인
         Store store = storeRepository.findById(request.getStoreId())
@@ -36,7 +36,7 @@ public class OrderService {
         // 2. 주문 엔티티 생성
         Order order = new Order();
         order.setStore(store);
-        order.setCustomer(request.getCustomerId());
+        order.setCustomer(request.getCustomer());
         order.setOrderType(request.getOrderType());
         order.setOrderStatus(OrderStatus.WAITING);
         order.setCreate_at(Timestamp.valueOf(LocalDateTime.now()));
@@ -45,7 +45,7 @@ public class OrderService {
         int totalPrice = 0;
 
         // 3. 주문 아이템 처리
-        for (OrderMenuRequestDto  itemRequest : request.getOrderItems()) {
+        for (OrderMenuRequestDto  itemRequest : request.getOrderMenus()) {
             Menu menu = menuRepository.findById(itemRequest.getMenuId())
                     .orElseThrow(() -> new IllegalArgumentException("해당 메뉴 없음"));
 
@@ -84,7 +84,7 @@ public class OrderService {
         }
         order.setOrderMenus(orderMenus);
         order.setTotalPrice(totalPrice);
-        orderRepository.save(order);
+        return orderRepository.save(order);
 //            // 4. 옵션 처리 (주문 메뉴에 딸린 옵션)
 //
 //            List<SelectedMenuOption> selectedOptions = new ArrayList<>();

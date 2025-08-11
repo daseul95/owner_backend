@@ -1,13 +1,13 @@
 package me.dev.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.dev.dto.payload.request.OrderRequest;
+import me.dev.dto.payload.request.OrderRequestDto;
+import me.dev.dto.payload.response.OrderResponseDto;
+import me.dev.entity.Order;
 import me.dev.service.OrderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
@@ -17,39 +17,49 @@ public class OrderController {
     private final OrderService orderService;
 
     /*
-              {
-              "storeId": 1,
-              "customerId": 1,
-              "orderType": "DELIVERY",
-              "orderItems": [
-                {
-                  "menuId": 1,
-                  "quantity": 2,
-                  "selectedOptions": [
-                    { "optionName": "햄추가"
-                    ,"optionPrice" : 1000},
-                    { "optionName": "햄추가"
-                     ,"optionPrice" : 1000}
-                  ]
-                },
-                {
-                  "menuId": 2,
-                  "quantity": 1,
-                  "selectedOptions": [
-                    { "optionName": "햄추가"
-                     ,"optionPrice" : 1000}
-                  ]
-                }
-              ]
-            }
+{
+  "customer": "김다슬",
+  "customerPhone": "010-1234-5678",
+  "storeId": 1,
+  "orderType": "DELIVERY",
+  "deliveryAddress": "서울시 강남구 어딘가",
+  "paymentMethod": "CARD",
+  "orderMenus": [
+    {
+      "menuId": 101,
+      "quantity": 2,
+      "selectedOptions": [
+        {
+          "optionName": "치즈 추가",
+          "optionPrice": 500
+        },
+        {
+          "optionName": "베이컨 추가",
+          "optionPrice": 1000
+        } ] },
+    {
+      "menuId": 102,
+      "quantity": 1,
+      "selectedOptions": [
+        {
+          "optionName": "곱빼기",
+          "optionPrice": 1500
+        } ] } ]  }
      */
     @PostMapping("/order")
-    public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
-        try {
-            orderService.createOrder(request);
-            return ResponseEntity.ok("주문이 성공적으로 생성되었습니다."+request);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("주문 생성 실패: " + e.getMessage());
-        }
+    @ResponseBody
+    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderRequestDto request) {
+
+        Order order = orderService.createOrder(request);
+        OrderResponseDto dto = new OrderResponseDto();
+        dto.setCustomer(request.getCustomer());
+        dto.setCustomerPhone(request.getCustomerPhone());
+        dto.setStoreId(request.getStoreId());
+        dto.setOrderType(request.getOrderType());
+        dto.setDeliveryAddress(request.getDeliveryAddress());
+        dto.setOrderMenus(request.getOrderMenus());
+        dto.setPaymentMethod(request.getPaymentMethod());
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
+
 }

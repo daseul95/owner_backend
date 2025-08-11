@@ -2,6 +2,7 @@ package me.dev.controller;
 
 import me.dev.dto.payload.request.LoginRequest;
 import me.dev.dto.payload.request.SignupRequest;
+import me.dev.dto.payload.response.UserResponseDto;
 import me.dev.entity.User;
 import me.dev.service.JwtTokenProvider;
 import me.dev.service.UserService;
@@ -75,12 +76,18 @@ public class UserController {
             userService.resaveUser(user);
             User userInfo = userService.findByUserId(request.getUserId());
 
+            UserResponseDto userDto = new UserResponseDto();
+            userDto.setUserId(userInfo.getUserId());
+            userDto.setPassword(userInfo.getPassword());
+            userDto.setName(userInfo.getCeoName());
+            userDto.setNickname(userInfo.getNickname());
+
             Map<String, Object> tokens = new HashMap<>();
             tokens.put("accessToken", accessToken);
             tokens.put("refreshToken", refreshToken);
             tokens.put("userInfo", userInfo);
 
-            return ResponseEntity.ok(tokens);
+            return ResponseEntity.ok(userDto);
 
         } catch (BadCredentialsException ex) {
             System.err.println("로그인 실패: 비밀번호 또는 이메일이 일치하지 않음");
