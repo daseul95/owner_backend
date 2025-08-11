@@ -84,9 +84,9 @@ public class UserController {
             Map<String, Object> tokens = new HashMap<>();
             tokens.put("accessToken", accessToken);
             tokens.put("refreshToken", refreshToken);
-            tokens.put("userInfo", userInfo);
+            tokens.put("userInfo", userDto);
 
-            return ResponseEntity.ok(userDto);
+            return ResponseEntity.ok(tokens);
 
         } catch (BadCredentialsException ex) {
             System.err.println("로그인 실패: 비밀번호 또는 이메일이 일치하지 않음");
