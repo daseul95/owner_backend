@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class MenuController {
     // /menu
     /*
     {
-          "category" : "토스트",
+
           "name":"햄토스트",
           "des":"햄이 들어가있어요",
           "imgUrl":"C://example.toast/ham",
@@ -48,11 +49,12 @@ public class MenuController {
     @PostMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> createMenu(
             @AuthenticationPrincipal User userDetails,
+            @RequestParam MultipartFile file,
             @RequestBody CreateMenuDTO dto
     ) {
         Long userId = userDetails.getId();
         Long storeId = storeService.getStoreIdByUserId(userId);
-        Menu menu = menuService.createMenu(storeId,userId,dto);
+        Menu menu = menuService.createMenu(file,storeId,userId,dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(menu);
     }
 

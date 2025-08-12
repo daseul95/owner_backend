@@ -14,11 +14,15 @@ public class OptionResponseDto {
     private Long id;
     private String name;
     private int price;
+    private String des;
+    private String imgUrl;
 
     public OptionResponseDto(Option option) {
         this.id = option.getId();
         this.name = option.getName();
         this.price = option.getOptionPrice();
+        this.des = option.getDes();
+        this.imgUrl=option.getImgUrl();
     }
 
 }

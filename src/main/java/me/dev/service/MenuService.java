@@ -12,12 +12,24 @@ import me.dev.entity.User;
 import me.dev.repository.MenuRepository;
 import me.dev.repository.StoreRepository;
 import me.dev.repository.UserRepository;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
+
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +38,9 @@ public class MenuService {
     private final StoreRepository storeRepository;
     private final MenuRepository menuRepository;
     private final UserRepository userRepository;
+    private final S3Uploader s3Uploader;
 
-    public Menu createMenu(Long storeId,Long userId, CreateMenuDTO dto) {
+    public Menu createMenu(MultipartFile file,Long storeId,Long userId, CreateMenuDTO dto) {
         Optional<Store> optionalStore = storeRepository.findById(storeId);
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new IllegalArgumentException("유저를 찾을 수 없습니다"));
@@ -44,7 +57,8 @@ public class MenuService {
         Menu menu = new Menu();
         menu.setName(dto.getName());
         menu.setDes(dto.getDes());
-        menu.setImgUrl(dto.getImgUrl());
+        String imgUrl = (dto.getImgUrl());
+        menu.setImgUrl(imgUrl);
         menu.setPrice(dto.getPrice());
 
         // 연관관계 설정
@@ -119,4 +133,5 @@ public class MenuService {
         menuRepository.delete(menu);
 
     }
+
 }

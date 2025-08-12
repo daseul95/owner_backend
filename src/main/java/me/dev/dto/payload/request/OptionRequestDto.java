@@ -10,4 +10,5 @@ public class OptionRequestDto {
     private String category;
     private String des;
     private int optionPrice;
+    private String imgUrl;
 }

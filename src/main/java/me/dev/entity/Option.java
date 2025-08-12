@@ -22,15 +22,13 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String category;
+
     private String name;   // 옵션명 (예: "사이즈", "추가치즈")
     private int optionPrice;     // 옵션 가격
     private String des;
     private String imgUrl;
 
-
-    @OneToMany(mappedBy = "option", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<OptionGroup> optionGroups = new ArrayList<>();
 
     public Option(String name, int optionPrice, String des,String imgUrl) {
         this.name = name;

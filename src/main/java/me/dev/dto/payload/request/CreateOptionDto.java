@@ -12,6 +12,7 @@ import lombok.Setter;
 public class CreateOptionDto {
 
 
+    private String category;
     private String name;
     private int optionPrice;
     private String des;

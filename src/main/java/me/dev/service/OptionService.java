@@ -1,13 +1,23 @@
 package me.dev.service;
 
-import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityNotFoundException;
 import me.dev.dto.payload.request.CreateOptionDto;
+import me.dev.dto.payload.request.OptionRequestDto;
+import me.dev.dto.payload.response.OptionResponseDto;
 import me.dev.entity.Option;
+import me.dev.entity.Store;
 import me.dev.repository.MenuGroupRepository;
 import me.dev.repository.OptionRepository;
 import me.dev.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -21,38 +31,46 @@ public class OptionService {
     private OptionRepository optionRepository;
 
 
-
     // 옵션 추가
-    @Transactional
     public Option createOption(CreateOptionDto dto) {
 
         Option option = new Option();
         option.setName(dto.getName());
+        option.setCategory(dto.getCategory());
         option.setOptionPrice(dto.getOptionPrice());
+        option.setDes(dto.getDes());
         option.setImgUrl(dto.getImgUrl());
         Option savedOption = optionRepository.save(option);
 
         return savedOption;
     }
 
-    // 2. 메뉴에 옵션 그룹 연결
-//    public void connectMenuAndOptionGroup(Long menuId, Long optionGroupId) {
-//        Menu menu = menuRepository.findById(menuId)
-//                .orElseThrow(() -> new IllegalArgumentException("메뉴 없음"));
-//        OptionGroup group = optionGroupRepository.findById(optionGroupId)
-//                .orElseThrow(() -> new IllegalArgumentException("옵션 그룹 없음"));
-//
-//        menuOptionGroupRepository.save(new MenuOptionGroup(menu, group));
-//    }
-}   //     3. 옵션 그룹에 옵션 추가
-//    public MenuOption addOptionToGroup(Long optionGroupId, String optionName, int price) {
-//    OptionGroup group = optionGroupRepository.findById(optionGroupId)
-//            .orElseThrow(() -> new IllegalArgumentException("옵션 그룹 없음"));
-//
-//    MenuOption option = new MenuOption();
-//    option.setName(optionName);
-//    option.setOptionPrice(price);
-//    option.setOptionGroup(group);
-//
-//    return optionRepository.save(option);
+    public List<OptionResponseDto> getAllOptions() {
+        return optionRepository.findAll().stream()
+                .map(OptionResponseDto::new) // 엔티티 → DTO 변환
+                .collect(Collectors.toList());
+    }
+
+    public OptionResponseDto getOptionById(Long id){
+
+             Option option = optionRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Option not found with id: " + id));;
+            return new OptionResponseDto(option);
+    }
+
+    @Transactional
+    public void updateOption(Long id, OptionRequestDto dto) {
+        Option option = optionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("option id가 존재하지 않습니다."));
+
+        if (dto.getName() != null) option.setName(dto.getName());
+        if (dto.getCategory() != null) option.setCategory(dto.getCategory());
+        if (dto.getDes() != null) option.setDes(dto.getDes());
+        if (dto.getOptionPrice() != 0) option.setOptionPrice(dto.getOptionPrice());
+        if (dto.getImgUrl() != null) option.setImgUrl(dto.getImgUrl());
+    }
+
+    public void deleteOption(Long id) {
+        optionRepository.deleteById(id);
+    }
+
+}
 
