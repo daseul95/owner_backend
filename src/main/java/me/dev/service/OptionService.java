@@ -3,7 +3,7 @@ package me.dev.service;
 import jakarta.transaction.Transactional;
 import me.dev.dto.payload.request.CreateOptionDto;
 import me.dev.entity.Option;
-import me.dev.repository.MenuOptionGroupRepository;
+import me.dev.repository.MenuGroupRepository;
 import me.dev.repository.OptionRepository;
 import me.dev.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class OptionService {
     @Autowired
     private MenuRepository menuRepository;
     @Autowired
-    private MenuOptionGroupRepository menuOptionGroupRepository;
+    private MenuGroupRepository menuGroupRepository;
     @Autowired
     private OptionRepository optionRepository;
 

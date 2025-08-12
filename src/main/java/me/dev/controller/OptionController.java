@@ -3,8 +3,8 @@ package me.dev.controller;
 import me.dev.dto.payload.request.CreateOptionDto;
 import me.dev.entity.Option;
 import me.dev.repository.OptionRepository;
-import me.dev.repository.OptionGroupRepository;
-import me.dev.service.MenuOptionGroupService;
+import me.dev.repository.GroupRepository;
+import me.dev.service.MenuGroupService;
 import me.dev.service.OptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ public class OptionController {
 
 
     @Autowired
-    private OptionGroupRepository optionGroupRepository;
+    private GroupRepository groupRepository;
     @Autowired
     private OptionRepository optionRepository;
     @Autowired
-    private MenuOptionGroupService menuOptionGroupService;
+    private MenuGroupService menuGroupService;
 
     @Autowired
     private OptionService optionService;

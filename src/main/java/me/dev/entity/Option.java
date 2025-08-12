@@ -30,7 +30,7 @@ public class Option {
 
     @OneToMany(mappedBy = "option", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<OptionGroupOption> optionGroupOptions = new ArrayList<>();
+    private List<OptionGroup> optionGroups = new ArrayList<>();
 
     public Option(String name, int optionPrice, String des,String imgUrl) {
         this.name = name;

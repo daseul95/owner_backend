@@ -1,10 +1,10 @@
 package me.dev.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.dev.dto.payload.DTO.MenuOptionGroupDto;
+import me.dev.dto.payload.DTO.MenuGroupDto;
 import me.dev.repository.OptionRepository;
-import me.dev.repository.OptionGroupRepository;
-import me.dev.service.MenuOptionGroupService;
+import me.dev.repository.GroupRepository;
+import me.dev.service.MenuGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
-public class MenuOptionGroupController {
+public class MenuGroupController {
 
     @Autowired
-    private OptionGroupRepository optionGroupRepository;
+    private GroupRepository groupRepository;
     @Autowired
     private OptionRepository optionRepository;
     @Autowired
-    private MenuOptionGroupService menuOptionGroupService;
+    private MenuGroupService menuGroupService;
 
     
     //메뉴 옵션 그룹 생성
@@ -30,12 +30,12 @@ public class MenuOptionGroupController {
       "optionGroup": 1
      }
      */
-    @PostMapping("/MenuOptionGroup")
+    @PostMapping("/MenuGroup")
     @ResponseBody
-    public ResponseEntity<MenuOptionGroupDto> createMenuOptionGroup(
-            @RequestBody MenuOptionGroupDto dto) {
+    public ResponseEntity<MenuGroupDto> createMenuOptionGroup(
+            @RequestBody MenuGroupDto dto) {
 
-        MenuOptionGroupDto response = menuOptionGroupService.createMenuOptionGroup(dto);
+        MenuGroupDto response = menuGroupService.createMenuGroup(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.dev.entity.OptionGroup;
+import me.dev.entity.Option;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OptionGroupDto {
+public class GroupDto {
     private Long id;
 
     private String name;
@@ -18,10 +18,10 @@ public class OptionGroupDto {
     // 옵션 리스트도 필요하면 DTO로 포함 가능 (생략 가능)
 
     // 엔티티 -> DTO 변환 생성자
-    public OptionGroupDto(OptionGroup entity) {
+    public GroupDto(Option entity) {
         this.id = entity.getId();
         this.name = entity.getName();
-        this.description = entity.getDescription();
+        this.description = entity.getDes();
         // 필요하면 options도 DTO 리스트로 변환해서 넣을 수 있음
     }
 

@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.dev.dto.payload.DTO.OptionGroupDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -45,7 +44,7 @@ public class Menu {
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     @JsonIgnore
     @JsonManagedReference
-    private List<MenuOptionGroup> menuOptionGroups = new ArrayList<>();
+    private List<MenuGroup> menuGroups = new ArrayList<>();
 
 }
 
