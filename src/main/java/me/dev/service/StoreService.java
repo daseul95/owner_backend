@@ -11,6 +11,8 @@ import me.dev.entity.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -22,8 +24,10 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
+    private final S3Service s3Service;
 
-    public void createStore(CreateStoreDto dto,@AuthenticationPrincipal User userDetails) {
+    public void createStore(CreateStoreDto dto,@AuthenticationPrincipal User userDetails
+    ,String dirName,MultipartFile file) {
 
 
 
@@ -43,7 +47,7 @@ public class StoreService {
                 .address(dto.getAddress())
                 .lat(dto.getLat())
                 .longti(dto.getLongti())
-                .image(dto.getImage())
+                .imgUrl(s3Service.uploadFile(dirName,file))
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -64,7 +68,7 @@ public class StoreService {
         if(dto.getAddress()!=null) store.setAddress(dto.getAddress());
         if(dto.getLat()!=null) store.setLat(dto.getLat());
         if(dto.getLongti()!=null) store.setLongti(dto.getLongti());
-        if(dto.getImage()!=null)store.setImage(dto.getImage());
+        if(dto.getImgUrl()!=null)store.setImgUrl(dto.getImgUrl());
 
     }
     public StoreResponseDto getStoreById(Long id) {

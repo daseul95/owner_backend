@@ -16,7 +16,7 @@ public class CreateStoreDto {
     private String address;
     private Float lat;
     private Float longti;
-    private String image;
+    private String imgUrl;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

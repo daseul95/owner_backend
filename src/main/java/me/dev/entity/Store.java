@@ -55,7 +55,7 @@ public class Store {
     private Float lat;
     private Float longti;
     @Column(nullable = true)
-    private String image;
+    private String imgUrl;
 
 
     @CreationTimestamp

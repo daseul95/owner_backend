@@ -25,7 +25,7 @@ public class StoreResponseDto {
     private String address;
     private Float lat;
     private Float longti;
-    private String image;
+    private String imgUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -43,7 +43,7 @@ public class StoreResponseDto {
         this.address = address;
         this.lat = lat;
         this.longti = longti;
-        this.image = image;
+        this.imgUrl = imgUrl;
     }
 
     public StoreResponseDto(Store store) {
@@ -57,7 +57,7 @@ public class StoreResponseDto {
         this.address = store.getAddress();
         this.lat = store.getLat();
         this.longti = store.getLongti();
-        this.image = store.getImage() != null ? store.getImage().toString() : null;
+        this.imgUrl = store.getImgUrl() != null ? store.getImgUrl().toString() : null;
         this.createdAt = store.getCreatedAt();
         this.updatedAt = store.getUpdatedAt();
     }

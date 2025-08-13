@@ -15,6 +15,6 @@ public class StoreRequestDto {
     private String address;
     private Float lat;
     private Float longti;
-    private String image;
+    private String imgUrl;
 
 }

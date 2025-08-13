@@ -54,7 +54,7 @@ public class MenuController {
     ) {
         Long userId = userDetails.getId();
         Long storeId = storeService.getStoreIdByUserId(userId);
-        Menu menu = menuService.createMenu(file,storeId,userId,dto);
+        Menu menu = menuService.createMenu(storeId,userId,dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(menu);
     }
 

@@ -20,10 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,9 +34,8 @@ public class MenuService {
     private final StoreRepository storeRepository;
     private final MenuRepository menuRepository;
     private final UserRepository userRepository;
-    private final S3Uploader s3Uploader;
 
-    public Menu createMenu(MultipartFile file,Long storeId,Long userId, CreateMenuDTO dto) {
+    public Menu createMenu(Long storeId,Long userId, CreateMenuDTO dto) {
         Optional<Store> optionalStore = storeRepository.findById(storeId);
         User user = userRepository.findById(userId)
                 .orElseThrow(()->new IllegalArgumentException("유저를 찾을 수 없습니다"));

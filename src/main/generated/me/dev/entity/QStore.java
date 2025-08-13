@@ -32,7 +32,7 @@ public class QStore extends EntityPathBase<Store> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath image = createString("image");
+    public final StringPath imgUrl = createString("imgUrl");
 
     public final NumberPath<Float> lat = createNumber("lat", Float.class);
 

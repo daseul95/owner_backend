@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,9 +54,10 @@ public class StoreController {
      */
     @PostMapping(value = "/store")
     @ResponseBody
-    public ResponseEntity<?> createStore(@RequestBody CreateStoreDto dto,@AuthenticationPrincipal User userDetails) {
+    public ResponseEntity<?> createStore(@RequestBody CreateStoreDto dto,@AuthenticationPrincipal User userDetails
+    ,@RequestParam("dirName") String dirName, @RequestParam("file") MultipartFile file) {
         User user = userDetails;
-        storeService.createStore(dto,user);
+        storeService.createStore(dto,user,dirName,file);
 
         Map<String, Object> storeInfo = new HashMap<>();
         storeInfo.put("storeInfo", dto);
@@ -87,7 +89,7 @@ public class StoreController {
         List<StoreResponseDto> storeDto = stores.stream()
                 .map( store -> new StoreResponseDto(store.getId(),store.getStoreName(),userId,store.getBusinessNum(),
                         store.getPostNum(),store.getDescription(),store.getPhone(),store.getAddress(),
-                store.getLat(),store.getLongti(),store.getImage()))
+                store.getLat(),store.getLongti(),store.getImgUrl()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(storeDto);
         }
@@ -103,7 +105,7 @@ public class StoreController {
           "address": "서울특별시 동작구 어딘가",
           "lat": 43.535,
           "longti": 114.55,
-          "image": "https://internet.com"     }
+          "imgUrl": "https://internet.com"     }
           중에서 골라서 수정가능
           수정안한거는 null 로 반환
      */
