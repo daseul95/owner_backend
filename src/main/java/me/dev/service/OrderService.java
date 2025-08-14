@@ -56,7 +56,7 @@ public class OrderService {
 
 
             // 옵션 리스트 처리
-            List<SelectedMenuOption> selectedOptions = new ArrayList<>();
+            List<SelectedOption> selectedOptions = new ArrayList<>();
             for (OrderMenuRequestDto.SelectedOptionDto optionDto : itemRequest.getSelectedOptions()) {
                 String optionName = optionDto.getOptionName();  // 프론트에서 받은 옵션명
 
@@ -64,7 +64,7 @@ public class OrderService {
                 if (option == null) {
                     throw new IllegalArgumentException("해당 옵션이 존재하지 않습니다: " + optionName);
                 }
-                SelectedMenuOption selectedOption = new SelectedMenuOption();
+                SelectedOption selectedOption = new SelectedOption();
                 selectedOption.setOption(option);
                 selectedOption.setOptionPrice(option.getOptionPrice());  // 옵션 가격 세팅
                 selectedOption.setOrderMenu(orderMenu); // 연관관계 설정
@@ -72,11 +72,11 @@ public class OrderService {
                 selectedOptions.add(selectedOption);
             }
 
-            orderMenu.setSelectedMenuOptions(selectedOptions);
+            orderMenu.setSelectedOptions(selectedOptions);
 
             orderMenu.setQuantity(itemRequest.getQuantity());
             int optionTotalPrice = selectedOptions.stream()
-                    .mapToInt(SelectedMenuOption::getOptionPrice)
+                    .mapToInt(SelectedOption::getOptionPrice)
                     .sum();
 
             int menuTotalPrice = (menu.getPrice() + optionTotalPrice) * itemRequest.getQuantity();

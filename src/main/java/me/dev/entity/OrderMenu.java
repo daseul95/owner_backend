@@ -15,7 +15,7 @@ public class OrderMenu {
 
 
     @Id
-    @Column(name="orderMenu_id")
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -31,7 +31,7 @@ public class OrderMenu {
 
 
     @OneToMany(mappedBy = "orderMenu", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SelectedMenuOption> selectedMenuOptions = new ArrayList<>();
+    private List<SelectedOption> selectedOptions = new ArrayList<>();
 
 
     private int quantity;

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "option_groups")
 @Getter
@@ -17,11 +19,10 @@ public class OptionGroup {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     @JsonBackReference
-    private Group group;
+    private Group groups;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "option_id", nullable = false)
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "option_id")
     private Option option;
 
     private int displayOrder;      // 옵션 순서 관리용

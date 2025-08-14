@@ -42,7 +42,7 @@ public class S3Service {
     private final S3Client s3Client =  S3Client.builder()
             .region(Region.AP_NORTHEAST_2)
             .credentialsProvider(ProfileCredentialsProvider.create())
-            .build();  // 주입받음, Bean으로 등록 필요
+            .build();  
 
     public String uploadFile(String dirName, MultipartFile file) {
         try {

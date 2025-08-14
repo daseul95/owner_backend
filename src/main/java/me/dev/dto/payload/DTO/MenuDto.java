@@ -24,7 +24,7 @@ public class MenuDto {
     private Long storeId;
     private String storeName;
 
-    private List<MenuGroupDto> menuGroups;
+//    private List<MenuGroupDto> menuGroups;
 
     // Menu 엔티티를 받아서 DTO로 변환하는 생성자
     public MenuDto(Menu menu) {
@@ -39,11 +39,11 @@ public class MenuDto {
             this.storeName = menu.getStore().getStoreName();
         }
 
-        if (menu.getMenuGroups() != null) {
-            this.menuGroups = menu.getMenuGroups().stream()
-                    .map(MenuGroupDto::new)
-                    .collect(Collectors.toList());
-        }
+//        if (menu.getMenuGroups() != null) {
+//            this.menuGroups = menu.getMenuGroups().stream()
+//                    .map(MenuGroupDto::new)
+//                    .collect(Collectors.toList());
+//        }
     }
 }
 

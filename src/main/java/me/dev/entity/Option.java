@@ -18,7 +18,7 @@ import java.util.List;
 public class Option {
 
     @Id
-    @Column(name="option_id")
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -35,7 +35,9 @@ public class Option {
         this.optionPrice = optionPrice;
         this.des = des;
         this.imgUrl = imgUrl;
+
     }
+
 
 
 

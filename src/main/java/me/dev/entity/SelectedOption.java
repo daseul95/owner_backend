@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name="selected_option")
-public class SelectedMenuOption {
+public class SelectedOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

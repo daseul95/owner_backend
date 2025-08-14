@@ -28,12 +28,9 @@ public class MenuGroupService {
     public MenuGroupDto createMenuGroup(MenuGroupDto dto) {
         Menu menu = menuRepository.findById(dto.getMenuId())
                 .orElseThrow(() -> new IllegalArgumentException("메뉴가 없습니다."));
-        Group group = groupRepository.findById(dto.getGroup())
-                .orElseThrow(() -> new IllegalArgumentException("옵션 그룹이 없습니다."));
 
         MenuGroup menuGroup = new MenuGroup();
         menuGroup.setMenu(menu);
-        menuGroup.setGroup(group);
 
         MenuGroup saved = menuGroupRepository.save(menuGroup);
         return new MenuGroupDto(saved);

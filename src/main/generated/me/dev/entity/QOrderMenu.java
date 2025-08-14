@@ -32,7 +32,7 @@ public class QOrderMenu extends EntityPathBase<OrderMenu> {
 
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
-    public final ListPath<SelectedMenuOption, QSelectedMenuOption> selectedMenuOptions = this.<SelectedMenuOption, QSelectedMenuOption>createList("selectedMenuOptions", SelectedMenuOption.class, QSelectedMenuOption.class, PathInits.DIRECT2);
+    public final ListPath<SelectedOption, QSelectedOption> selectedOptions = this.<SelectedOption, QSelectedOption>createList("selectedOptions", SelectedOption.class, QSelectedOption.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> totalPrice = createNumber("totalPrice", Integer.class);
 

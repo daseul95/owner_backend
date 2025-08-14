@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QSelectedMenuOption is a Querydsl query type for SelectedMenuOption
+ * QSelectedOption is a Querydsl query type for SelectedOption
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QSelectedMenuOption extends EntityPathBase<SelectedMenuOption> {
+public class QSelectedOption extends EntityPathBase<SelectedOption> {
 
-    private static final long serialVersionUID = -1036726965L;
+    private static final long serialVersionUID = -1227787636L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QSelectedMenuOption selectedMenuOption = new QSelectedMenuOption("selectedMenuOption");
+    public static final QSelectedOption selectedOption = new QSelectedOption("selectedOption");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -32,23 +32,23 @@ public class QSelectedMenuOption extends EntityPathBase<SelectedMenuOption> {
 
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
-    public QSelectedMenuOption(String variable) {
-        this(SelectedMenuOption.class, forVariable(variable), INITS);
+    public QSelectedOption(String variable) {
+        this(SelectedOption.class, forVariable(variable), INITS);
     }
 
-    public QSelectedMenuOption(Path<? extends SelectedMenuOption> path) {
+    public QSelectedOption(Path<? extends SelectedOption> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QSelectedMenuOption(PathMetadata metadata) {
+    public QSelectedOption(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QSelectedMenuOption(PathMetadata metadata, PathInits inits) {
-        this(SelectedMenuOption.class, metadata, inits);
+    public QSelectedOption(PathMetadata metadata, PathInits inits) {
+        this(SelectedOption.class, metadata, inits);
     }
 
-    public QSelectedMenuOption(Class<? extends SelectedMenuOption> type, PathMetadata metadata, PathInits inits) {
+    public QSelectedOption(Class<? extends SelectedOption> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.option = inits.isInitialized("option") ? new QOption(forProperty("option")) : null;
         this.orderMenu = inits.isInitialized("orderMenu") ? new QOrderMenu(forProperty("orderMenu"), inits.get("orderMenu")) : null;

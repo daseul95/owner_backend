@@ -31,6 +31,13 @@ public class OptionService {
     private OptionRepository optionRepository;
 
 
+    /* {
+    String category;
+    String name;
+    int optionPrice;
+    String des;
+    String imgUrl;
+}*/
     // 옵션 추가
     public Option createOption(CreateOptionDto dto) {
 

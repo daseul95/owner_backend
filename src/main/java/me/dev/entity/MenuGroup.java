@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -26,20 +28,18 @@ public class MenuGroup {
     @JsonBackReference
     private Menu menu;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    @JsonBackReference
-    private Group group;
 
-    public MenuGroup(Group group){
-        this.group = group;
-    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "option_groups_id")
+    private OptionGroup optionGroup;
 
     private boolean isRequired;
 
 
-    public MenuGroup(Menu menu, Group group) {
+    public MenuGroup(Menu menu, OptionGroup optionGroup) {
         this.menu=menu;
-        this.group=group;
+        this.optionGroup=optionGroup;
     }
 }

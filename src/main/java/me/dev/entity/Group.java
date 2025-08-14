@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "`group`")
+@Table(name = "groups")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,9 +22,12 @@ public class Group {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<OptionGroup> optionGroups = new ArrayList<>();
+//    @OneToMany(mappedBy = "groups")
+//    @JsonManagedReference
+//    private List<MenuGroup> MenuGroup = new ArrayList<>();
 
+    @OneToMany(mappedBy = "groups")
+    @JsonManagedReference
+    private List<OptionGroup> OptionGroup = new ArrayList<>();
 
 }

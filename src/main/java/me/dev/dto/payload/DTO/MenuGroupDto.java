@@ -14,14 +14,12 @@ import me.dev.entity.MenuGroup;
 public class MenuGroupDto {
     private Long id;
     private Long menuId;   // MenuDto 대신 ID만 넣기 권장
-    private Long group;
     private boolean isRequired;
 
 
     public MenuGroupDto(MenuGroup entity) {
         this.id = entity.getId();
         this.menuId = entity.getMenu().getId();
-        this.group = entity.getGroup().getId();
         this.isRequired = entity.isRequired();
     }
 }

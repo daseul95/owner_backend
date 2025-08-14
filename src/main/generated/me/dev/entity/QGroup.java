@@ -26,7 +26,7 @@ public class QGroup extends EntityPathBase<Group> {
 
     public final StringPath name = createString("name");
 
-    public final ListPath<OptionGroup, QOptionGroup> optionGroups = this.<OptionGroup, QOptionGroup>createList("optionGroups", OptionGroup.class, QOptionGroup.class, PathInits.DIRECT2);
+    public final ListPath<OptionGroup, QOptionGroup> OptionGroup = this.<OptionGroup, QOptionGroup>createList("OptionGroup", OptionGroup.class, QOptionGroup.class, PathInits.DIRECT2);
 
     public QGroup(String variable) {
         super(Group.class, forVariable(variable));

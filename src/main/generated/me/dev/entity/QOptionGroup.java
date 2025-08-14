@@ -24,7 +24,7 @@ public class QOptionGroup extends EntityPathBase<OptionGroup> {
 
     public final NumberPath<Integer> displayOrder = createNumber("displayOrder", Integer.class);
 
-    public final QGroup group;
+    public final QGroup groups;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -48,7 +48,7 @@ public class QOptionGroup extends EntityPathBase<OptionGroup> {
 
     public QOptionGroup(Class<? extends OptionGroup> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.group = inits.isInitialized("group") ? new QGroup(forProperty("group")) : null;
+        this.groups = inits.isInitialized("groups") ? new QGroup(forProperty("groups")) : null;
         this.option = inits.isInitialized("option") ? new QOption(forProperty("option")) : null;
     }
 
