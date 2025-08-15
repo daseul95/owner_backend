@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "option_groups")
+@Table(name = "option_by_group")
 @Getter
 @Setter
 public class OptionByGroup {

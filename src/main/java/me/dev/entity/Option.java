@@ -33,7 +33,7 @@ public class Option {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="OptionByGroup_id")
+    @JoinColumn(name="Option_by_group_id")
     @JsonBackReference
     private OptionByGroup OptionByGroup;
 

@@ -31,6 +31,7 @@ public class Order {
     private String customerPhone;
 
     @ManyToOne
+    @JoinColumn(name="store_id")
     private Store store;
 
     @Enumerated(EnumType.STRING)

@@ -29,7 +29,7 @@ public class Store {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "id")
     @JsonBackReference
     private User user;
 
