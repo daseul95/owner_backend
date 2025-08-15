@@ -84,9 +84,9 @@ public class MenuController {
           "price":6000
         }
      */
-    // 메뉴 하나 수정 (PUT)
+    // 메뉴 하나 수정 (PATCH)
     // /menu/{메뉴번호}
-    @PutMapping("/menu/{id}")
+    @PatchMapping("/menu/{id}")
     public ResponseEntity<?> updateMenu(@PathVariable("id") Long id, @RequestBody MenuDto dto) {
         Menu updateMenu = menuService.updateMenu(id, dto);
         return ResponseEntity.ok(updateMenu);

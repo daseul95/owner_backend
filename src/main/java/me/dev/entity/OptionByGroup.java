@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "option_groups")
 @Getter
 @Setter
-public class OptionGroup {
+public class OptionByGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,9 +21,8 @@ public class OptionGroup {
     @JsonBackReference
     private Group group;
 
-    @ManyToOne
-    @JoinColumn(name = "option_id")
-    private Option option;
+    @OneToMany(mappedBy = "OptionByGroup", cascade = CascadeType.ALL)
+    private List<Option> options;
 
     private int displayOrder;      // 옵션 순서 관리용
 

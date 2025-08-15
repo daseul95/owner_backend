@@ -64,9 +64,9 @@ public class OptionController {
         return ResponseEntity.ok(option);
     }
 
-    // 옵션 하나 수정 (PUT)
+    // 옵션 하나 수정 (PATCH)
     // /option/{옵션번호}
-    @PutMapping("option/{id}")
+    @PatchMapping("/option/{id}")
     public ResponseEntity<?> updateOption(@PathVariable("id")Long id, @RequestBody OptionRequestDto dto) {
         optionService.updateOption(id, dto);
         return ResponseEntity.ok(dto);

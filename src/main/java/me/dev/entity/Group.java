@@ -21,7 +21,7 @@ public class Group {
     private Long id;
 
     private String name;
-    private String description;
+    private String des;
 
     @OneToMany(mappedBy = "group")
     @JsonManagedReference
@@ -29,6 +29,6 @@ public class Group {
 
     @OneToMany(mappedBy = "group")
     @JsonManagedReference
-    private List<OptionGroup> OptionGroup;
+    private List<OptionByGroup> OptionByGroup;
 
 }

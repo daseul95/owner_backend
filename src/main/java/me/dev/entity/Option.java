@@ -1,5 +1,6 @@
 package me.dev.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,9 +31,11 @@ public class Option {
     private String imgUrl;
 
 
-    @OneToMany(mappedBy = "option")
-    @JsonManagedReference
-    private List<OptionGroup> OptionGroup;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="OptionByGroup_id")
+    @JsonBackReference
+    private OptionByGroup OptionByGroup;
 
     public Option(String name, int optionPrice, String des,String imgUrl) {
         this.name = name;

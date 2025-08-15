@@ -6,25 +6,25 @@
 //import lombok.NoArgsConstructor;
 //import lombok.Setter;
 //import me.dev.dto.payload.DTO.MenuDto;
-//import me.dev.dto.payload.DTO.OptionGroupDto;
+//import me.dev.dto.payload.DTO.OptionByGroupDto;
 //import me.dev.entity.Menu;
-//import me.dev.entity.MenuOptionGroup;
-//import me.dev.entity.OptionGroup;
+//import me.dev.entity.MenuOptionByGroup;
+//import me.dev.entity.OptionByGroup;
 //
 //@Getter
 //@Setter
 //@NoArgsConstructor
 //@AllArgsConstructor
-//public class MenuOptionGroupDto {
+//public class MenuOptionByGroupDto {
 //
 //    private long id;
 //    private MenuDto menu;
-//    private OptionGroupDto optionGroup;
+//    private OptionByGroupDto OptionByGroup;
 //
-//    public MenuOptionGroupDto(MenuOptionGroup entity) {
+//    public MenuOptionByGroupDto(MenuOptionByGroup entity) {
 //        this.id = entity.getId();
 //        this.menu = new MenuDto(entity.getMenu());            // DTO로 변환
-//        this.optionGroup = new OptionGroupDto(entity.getOptionGroup()); // DTO로 변환
+//        this.OptionByGroup = new OptionByGroupDto(entity.getOptionByGroup()); // DTO로 변환
 //    }
 //}
 //

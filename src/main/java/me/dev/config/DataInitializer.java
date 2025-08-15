@@ -1,7 +1,7 @@
 //package me.dev.config;
 //
 //import lombok.RequiredArgsConstructor;
-//import me.dev.entity.OptionGroup;
+//import me.dev.entity.OptionByGroup;
 //import me.dev.repository.OptionRepository;
 //import me.dev.repository.GroupRepository;
 //import me.dev.repository.StoreRepository;
