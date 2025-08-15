@@ -35,7 +35,7 @@ public class Option {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="Option_by_group_id")
     @JsonBackReference
-    private OptionByGroup OptionByGroup;
+    private OptionByGroup optionByGroup;
 
     public Option(String name, int optionPrice, String des,String imgUrl) {
         this.name = name;

@@ -21,7 +21,7 @@ public class OptionByGroup {
     @JsonBackReference
     private Group group;
 
-    @OneToMany(mappedBy = "OptionByGroup", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "optionByGroup", cascade = CascadeType.ALL)
     private List<Option> options;
 
     private int displayOrder;      // 옵션 순서 관리용

@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OptionRequestDto {
+    private long id;
     private String name;
     private String category;
     private String des;
