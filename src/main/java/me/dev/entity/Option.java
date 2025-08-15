@@ -18,7 +18,7 @@ import java.util.List;
 public class Option {
 
     @Id
-    @Column(name="id")
+    @Column(name="option_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,6 +29,10 @@ public class Option {
     private String des;
     private String imgUrl;
 
+
+    @OneToMany(mappedBy = "option")
+    @JsonManagedReference
+    private List<OptionGroup> OptionGroup;
 
     public Option(String name, int optionPrice, String des,String imgUrl) {
         this.name = name;

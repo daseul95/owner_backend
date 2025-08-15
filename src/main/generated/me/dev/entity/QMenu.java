@@ -28,6 +28,8 @@ public class QMenu extends EntityPathBase<Menu> {
 
     public final StringPath imgUrl = createString("imgUrl");
 
+    public final ListPath<MenuGroup, QMenuGroup> MenuGroup = this.<MenuGroup, QMenuGroup>createList("MenuGroup", MenuGroup.class, QMenuGroup.class, PathInits.DIRECT2);
+
     public final StringPath name = createString("name");
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);

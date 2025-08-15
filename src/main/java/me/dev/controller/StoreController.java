@@ -20,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,27 +43,26 @@ public class StoreController {
 
     // 가게 등록 (POST)
     /*  {
-          "storeName": "헬로헬로",
+   "storeName": "헬로수정완",
           "businessNum": "070-1234-5678",
           "postNum": "06234",
-          "description": "인터넷 카페입니다.",
+          "description": "오프라인 카페입니다.",
           "phone": "02-1234-5678",
           "address": "서울특별시 동작구 어딘가",
           "lat": 43.535,
           "longti": 114.55,
-          "image": "https://internet.com"     }
+          "imgUrl": "https://internet.com"  }
+
      */
     @PostMapping(value = "/store")
     @ResponseBody
     public ResponseEntity<?> createStore(@RequestBody CreateStoreDto dto,@AuthenticationPrincipal User userDetails
-    ,@RequestParam("dirName") String dirName, @RequestParam("file") MultipartFile file) {
+    ) throws IOException {
+
         User user = userDetails;
-        storeService.createStore(dto,user,dirName,file);
+        storeService.createStore(dto,user);
 
-        Map<String, Object> storeInfo = new HashMap<>();
-        storeInfo.put("storeInfo", dto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(storeInfo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
 

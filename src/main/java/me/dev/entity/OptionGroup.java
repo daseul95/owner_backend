@@ -19,7 +19,7 @@ public class OptionGroup {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     @JsonBackReference
-    private Group groups;
+    private Group group;
 
     @ManyToOne
     @JoinColumn(name = "option_id")

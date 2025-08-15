@@ -2,7 +2,9 @@ package me.dev.dto.payload.request;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,6 +13,7 @@ public class CreateStoreDto {
     private String storeName;
     private String businessNum;
     private String postNum;
+    private Long userId;
     private String description;
     private String phone;
     private String address;

@@ -27,7 +27,7 @@ public class Menu {
 
 
     @Id
-    @Column(name="id")
+    @Column(name="menu_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -41,6 +41,9 @@ public class Menu {
     @JsonBackReference
     private Store store;
 
+    @OneToMany(mappedBy = "menu")
+    @JsonManagedReference
+    private List<MenuGroup> MenuGroup;
 
 }
 

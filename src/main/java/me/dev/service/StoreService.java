@@ -8,12 +8,15 @@ import me.dev.repository.StoreRepository;
 import me.dev.repository.UserRepository;
 import me.dev.entity.Store;
 import me.dev.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,19 +27,32 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
-    private final S3Service s3Service;
+    @Autowired
+    private S3Service s3Service;
 
-    public void createStore(CreateStoreDto dto,@AuthenticationPrincipal User userDetails
-    ,String dirName,MultipartFile file) {
+    @Autowired
+    private  S3Uploader s3Uploader;
 
 
+    /*
+    createStoreDto {
+    String storeName;
+    String businessNum;
+    String postNum;
+    String description;
+    String phone;
+    String address;
+    Float lat;
+    Float longti;
+    String imgUrl;
+   }
+     */
+    public CreateStoreDto createStore(CreateStoreDto dto,@AuthenticationPrincipal User userDetails) throws IOException {
 
         User user= userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자 없음"));
 
-
         System.out.println("create store 서비스 진입");
-
         Store store = Store.builder()
                 .user(user)
                 .storeName(dto.getStoreName())
@@ -47,14 +63,30 @@ public class StoreService {
                 .address(dto.getAddress())
                 .lat(dto.getLat())
                 .longti(dto.getLongti())
-                .imgUrl(s3Service.uploadFile(dirName,file))
+                .imgUrl(dto.getImgUrl())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
 
         storeRepository.save(store);
+        dto.setCreated_at(store.getCreatedAt());
+        dto.setUpdated_at(store.getUpdatedAt());
+        return dto;
     }
 
+    /*
+      createStoreDto {
+    String storeName;
+    String businessNum;
+    String postNum;
+    String description;
+    String phone;
+    String address;
+    Float lat;
+    Float longti;
+    String imgUrl;
+   }
+     */
     @Transactional
     public void updateStore(Long id,CreateStoreDto dto){
         Store store = storeRepository.findById(id)
