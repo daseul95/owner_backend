@@ -38,7 +38,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath refreshToken = createString("refreshToken");
 
-    public final ListPath<Store, QStore> stores = this.<Store, QStore>createList("stores", Store.class, QStore.class, PathInits.DIRECT2);
+    public final ListPath<Store, QStore> store = this.<Store, QStore>createList("store", Store.class, QStore.class, PathInits.DIRECT2);
 
     public final StringPath userId = createString("userId");
 

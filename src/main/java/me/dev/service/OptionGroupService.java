@@ -22,7 +22,7 @@ public class OptionGroupService {
     public OptionGroupDto createOptionCroup(OptionGroupDto dto){
         OptionGroup optionGroup = new OptionGroup();
         Group group = groupRepository.findById(dto.getGroups()).orElseThrow(()->new IllegalArgumentException("group이 없습니다."));
-        optionGroup.setGroups(group);
+        optionGroup.setGroup(group);
         optionGroup.setId(dto.getGroups());
 
         optionGroupRepository.save(optionGroup);

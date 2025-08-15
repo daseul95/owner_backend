@@ -6,6 +6,7 @@ build/
 
 ### IntelliJ IDEA ###
 src/main/resources/application.properties
+src/main/java/me/dev/controller/UploadController.java
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml

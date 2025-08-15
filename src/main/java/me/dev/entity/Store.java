@@ -24,28 +24,22 @@ import java.util.List;
 public class Store {
 
     @Id
-    @Column(name="id")
+    @Column(name="store_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
 
     private String storeName;
 
     // 양방향 관계를 원할 경우
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Menu> menus = new ArrayList<>();
+    private List<Menu> menu = new ArrayList<>();
 
-    // 편의 메서드
-    public void addMenu(Menu menu) {
-        menus.add(menu);
-        menu.setStore(this);
-    }
-
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private User user;
 
     private String businessNum;
     private String postNum;

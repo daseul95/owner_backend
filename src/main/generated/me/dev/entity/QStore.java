@@ -38,7 +38,7 @@ public class QStore extends EntityPathBase<Store> {
 
     public final NumberPath<Float> longti = createNumber("longti", Float.class);
 
-    public final ListPath<Menu, QMenu> menus = this.<Menu, QMenu>createList("menus", Menu.class, QMenu.class, PathInits.DIRECT2);
+    public final ListPath<Menu, QMenu> menu = this.<Menu, QMenu>createList("menu", Menu.class, QMenu.class, PathInits.DIRECT2);
 
     public final StringPath phone = createString("phone");
 

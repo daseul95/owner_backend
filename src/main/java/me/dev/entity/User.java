@@ -15,14 +15,14 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name="user")
+@Table(name="`user`")
 @Getter
 @Setter
 public class User  implements UserDetails {
 
 
     @Id
-    @Column(name="id")
+    @Column(name="user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -33,9 +33,9 @@ public class User  implements UserDetails {
 
     private String nickname;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="user",cascade=CascadeType.ALL)
     @JsonManagedReference
-    private List<Store> stores = new ArrayList<>();
+    private List<Store> store = new ArrayList<>();
 
     private String area;
 

@@ -24,6 +24,8 @@ public class QGroup extends EntityPathBase<Group> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final ListPath<MenuGroup, QMenuGroup> MenuGroup = this.<MenuGroup, QMenuGroup>createList("MenuGroup", MenuGroup.class, QMenuGroup.class, PathInits.DIRECT2);
+
     public final StringPath name = createString("name");
 
     public final ListPath<OptionGroup, QOptionGroup> OptionGroup = this.<OptionGroup, QOptionGroup>createList("OptionGroup", OptionGroup.class, QOptionGroup.class, PathInits.DIRECT2);

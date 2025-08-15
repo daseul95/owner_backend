@@ -32,7 +32,7 @@ public class StoreResponseDto {
     // 필요한 필드만 받는 생성자 직접 추가
     public StoreResponseDto(Long id,String storeName,long uid, String businessNum,
                             String postNum,String description,String phone,
-                            String address,float lat,float longti,String image) {
+                            String address,float lat,float longti,String imgUrl) {
         this.id=id;
         this.storeName=storeName;
         this.uid = uid;

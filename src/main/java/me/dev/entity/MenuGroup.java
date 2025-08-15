@@ -32,14 +32,14 @@ public class MenuGroup {
 
 
     @ManyToOne
-    @JoinColumn(name = "option_groups_id")
-    private OptionGroup optionGroup;
+    @JoinColumn(name = "groups_id")
+    private Group group;
 
     private boolean isRequired;
 
 
-    public MenuGroup(Menu menu, OptionGroup optionGroup) {
+    public MenuGroup(Menu menu, Group group) {
         this.menu=menu;
-        this.optionGroup=optionGroup;
+        this.group=group;
     }
 }

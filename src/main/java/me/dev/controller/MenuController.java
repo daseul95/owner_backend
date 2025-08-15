@@ -49,7 +49,6 @@ public class MenuController {
     @PostMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> createMenu(
             @AuthenticationPrincipal User userDetails,
-            @RequestParam MultipartFile file,
             @RequestBody CreateMenuDTO dto
     ) {
         Long userId = userDetails.getId();

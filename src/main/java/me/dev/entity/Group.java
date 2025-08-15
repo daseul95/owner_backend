@@ -17,17 +17,18 @@ import java.util.List;
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Long id;
 
     private String name;
     private String description;
 
-//    @OneToMany(mappedBy = "groups")
-//    @JsonManagedReference
-//    private List<MenuGroup> MenuGroup = new ArrayList<>();
-
-    @OneToMany(mappedBy = "groups")
+    @OneToMany(mappedBy = "group")
     @JsonManagedReference
-    private List<OptionGroup> OptionGroup = new ArrayList<>();
+    private List<MenuGroup> MenuGroup;
+
+    @OneToMany(mappedBy = "group")
+    @JsonManagedReference
+    private List<OptionGroup> OptionGroup;
 
 }

@@ -70,7 +70,7 @@ public class S3Service {
         }
     }
 
-    private static String getExtension(String filename) {
+    public static String getExtension(String filename) {
         int dotIndex = filename.lastIndexOf(".");
         if (dotIndex == -1) throw new IllegalArgumentException("확장자가 없는 파일입니다.");
         return filename.substring(dotIndex).toLowerCase();
@@ -125,7 +125,7 @@ public class S3Service {
         return false;
     }
 
-    private String createFileName(String ext) {
+    public String createFileName(String ext) {
         return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
                 + "-"
                 + UUID.randomUUID().toString()

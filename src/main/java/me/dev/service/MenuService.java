@@ -58,7 +58,7 @@ public class MenuService {
 
         // 연관관계 설정
         menu.setStore(store);
-        store.getMenus().add(menu); // 양방향일 경우
+        store.getMenu().add(menu); // 양방향일 경우
 
         Menu saved = menuRepository.save(menu);
         return menu;

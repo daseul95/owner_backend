@@ -22,13 +22,13 @@ public class QMenuGroup extends EntityPathBase<MenuGroup> {
 
     public static final QMenuGroup menuGroup = new QMenuGroup("menuGroup");
 
+    public final QGroup group;
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isRequired = createBoolean("isRequired");
 
     public final QMenu menu;
-
-    public final QOptionGroup optionGroup;
 
     public QMenuGroup(String variable) {
         this(MenuGroup.class, forVariable(variable), INITS);
@@ -48,8 +48,8 @@ public class QMenuGroup extends EntityPathBase<MenuGroup> {
 
     public QMenuGroup(Class<? extends MenuGroup> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.group = inits.isInitialized("group") ? new QGroup(forProperty("group")) : null;
         this.menu = inits.isInitialized("menu") ? new QMenu(forProperty("menu"), inits.get("menu")) : null;
-        this.optionGroup = inits.isInitialized("optionGroup") ? new QOptionGroup(forProperty("optionGroup"), inits.get("optionGroup")) : null;
     }
 
 }
