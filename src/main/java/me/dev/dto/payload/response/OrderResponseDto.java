@@ -2,11 +2,10 @@ package me.dev.dto.payload.response;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.dev.dto.payload.request.OrderMenuRequestDto;
+import me.dev.dto.payload.order.OrderMenuRequestDto;
 import me.dev.entity.enumerator.OrderStatus;
 import me.dev.entity.enumerator.OrderType;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 

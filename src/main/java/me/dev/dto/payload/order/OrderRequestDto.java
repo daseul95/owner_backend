@@ -1,9 +1,7 @@
-package me.dev.dto.payload.request;
+package me.dev.dto.payload.order;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import me.dev.entity.enumerator.OrderType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,10 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderRequestDto {
-        private Long id;
-        private Long customerId;
-        private List<OrderMenuRequestDto> orderMenus;
-        private LocalDateTime created_at;
+        private Long storeId;
+        private List<OrderMenuRequestDto> menus;
+        private int totalPrice;
 }
 //
 //        private String customer;

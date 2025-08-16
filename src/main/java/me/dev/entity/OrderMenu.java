@@ -1,6 +1,7 @@
 package me.dev.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name="order_menu")
 public class OrderMenu {
 
@@ -21,17 +23,13 @@ public class OrderMenu {
 
     private String customer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "menu_id")
-    private Menu menu;
-
-
-    @OneToMany(mappedBy = "orderMenu", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SelectedOption> selectedOptions = new ArrayList<>();
+//    @ManyToOne
+//    @JoinColumn(name = "menu_id")
+//    private Menu menu;
 
 
     private int quantity;

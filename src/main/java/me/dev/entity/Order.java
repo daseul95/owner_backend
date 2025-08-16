@@ -36,15 +36,17 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderType orderType;
+
     private String delivery_address; // 배달일 경우만 사용
 
     // 주문한 메뉴 항목 여러 개 (1:N 관계)
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderMenu> orderMenus = new ArrayList<>();
+    private List<OrderMenu> orderMenu = new ArrayList<>();
 
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.WAITING;
+
     private int totalPrice;
     private String payment_method;
 
@@ -53,4 +55,9 @@ public class Order {
 
     @UpdateTimestamp
     private LocalDateTime updated_at;
+
+    public void addOrderMenu(OrderMenu menu) {
+        this.orderMenu.add(menu);
+        menu.setOrder(this);
+    }
 }
