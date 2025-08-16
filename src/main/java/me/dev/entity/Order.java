@@ -60,4 +60,12 @@ public class Order {
         this.orderMenu.add(menu);
         menu.setOrder(this);
     }
+
+    public void updateMenus(List<OrderMenu> menus) {
+        this.orderMenu.clear();        // 기존 메뉴들 다 삭제
+        for (OrderMenu menu : menus) { // 새로 받은 메뉴들 하나씩 추가
+            addOrderMenu(menu);        // 연관관계 편의 메서드 사용
+        }
+    }
+
 }

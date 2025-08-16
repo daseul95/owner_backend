@@ -27,14 +27,23 @@ public class OrderMenu {
     @JoinColumn(name = "order_id")
     private Order order;
 
-//    @ManyToOne
-//    @JoinColumn(name = "menu_id")
-//    private Menu menu;
+    @ManyToOne
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
 
 
     private int quantity;
 
     private int totalPrice;
+
+    public static OrderMenu create(Menu menu, int quantity) {
+        return OrderMenu.builder()
+                .menu(menu)
+                .quantity(quantity)
+                .id(menu.getId())
+                .build();
+    }
+
 
 
 

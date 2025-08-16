@@ -3,14 +3,13 @@ package me.dev.dto.payload.order;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 public class OrderRequestDto {
         private Long storeId;
-        private List<OrderMenuRequestDto> menus;
+        private List<OrderMenuDto> menus;
         private int totalPrice;
 }
 //

@@ -3,11 +3,9 @@ package me.dev.dto.payload.order;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class OrderMenuRequestDto {
+public class OrderMenuDto {
     private Long menuId;
     private int quantity;
 
