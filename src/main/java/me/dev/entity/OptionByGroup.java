@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,14 +18,12 @@ public class OptionByGroup {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "groups_id", nullable = false)
+    @JoinColumn(name = "group_id", nullable = false)
     @JsonBackReference
     private Group group;
 
-    @OneToMany(mappedBy = "optionByGroup", cascade = CascadeType.ALL)
-    private List<Option> options;
 
-    private int displayOrder;      // 옵션 순서 관리용
-
-    // getters, setters, constructors
+    @ManyToOne
+    @JoinColumn(name = "option_id")
+    private Option option;
 }

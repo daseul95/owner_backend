@@ -33,6 +33,7 @@ public class MenuGroup {
 
     @ManyToOne
     @JoinColumn(name = "groups_id")
+    @JsonBackReference
     private Group group;
 
     private boolean isRequired;

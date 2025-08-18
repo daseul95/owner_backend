@@ -29,6 +29,7 @@ dependencies {
     implementation 'software.amazon.awssdk:s3:2.20.46'
 
 
+
     implementation 'software.amazon.awssdk:auth:2.20.74'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -65,7 +66,7 @@ dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
-
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 def generated = layout.buildDirectory.dir("generated/querydsl").get().asFile;

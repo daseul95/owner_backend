@@ -9,6 +9,7 @@ import me.dev.repository.OptionByGroupRepository;
 import me.dev.repository.OptionRepository;
 import me.dev.repository.GroupRepository;
 import me.dev.service.GroupService;
+import me.dev.service.OptionByGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,9 @@ public class GroupController {
 
     @Autowired
     private OptionByGroupRepository ogRepository;
+
+    @Autowired
+    private OptionByGroupService optionByGroupService;
 
 
     // 그룹 추가 (POST)
@@ -82,81 +86,15 @@ public class GroupController {
     //옵션과 함께 하나의 그룹 생성 (POST)
     /*
   {
-    "id": 1,
-    "optionByGroupDto": [
-      {"optionId": 10},
-      {"optionId": 11}
-    ]
+     {"groupId": 4,
+  "optionId": [2, 3, 4]
   }
      */
     @PostMapping("/group/option")
-    public String OptionFromGroup(@RequestBody GroupDto groupDto){
+    public ResponseEntity<?> createOptionByGroup(@RequestBody OptionByGroupDto ogDto){
 
-        Group group = groupRepository.findById(groupDto.getId())
-                .orElseThrow(() -> new RuntimeException("Group not found"));
-
-        List<OptionByGroup> optionByGroups = groupDto.getOptionByGroupDto().stream()
-                .map(dto -> {
-                    Option option = optionRepository.findById(dto.getOptionId())
-                            .orElseThrow(() -> new RuntimeException("Option not found"));
-
-                    OptionByGroup og = new OptionByGroup();
-                    og.setGroup(group);
-                    og.setOptions(List.of(option)); // OptionByGroup 안에 Option 리스트
-                    return og;
-                }).toList();
-
-        ogRepository.saveAll(optionByGroups);
-
-        return "옵션 그룹 저장 완료";
-    }
-
-    //옵션과 함께 모든 그룹 생성 (POST)
-
-    /*
-    [
-  {
-    "id": 1,
-    "optionByGroupDto": [
-      { "optionId": 10 },
-      { "optionId": 11 }
-    ]
-  },
-  {
-    "id": 2,
-    "optionByGroupDto": [
-      { "optionId": 12 },
-      { "optionId": 13 },
-      { "optionId": 14 }
-    ]
-  }
-]
-     */
-    @PostMapping("/group/options")
-    public String OptionFromGroupAll(@RequestBody List<GroupDto> Dto){
-        for (GroupDto groupDto : Dto) {
-            // 그룹 조회
-            Group group = groupRepository.findById(groupDto.getId())
-                    .orElseThrow(() -> new RuntimeException("Group not found"));
-
-            // 옵션 매핑
-            List<OptionByGroup> optionByGroups = groupDto.getOptionByGroupDto().stream()
-                    .map(dto -> {
-                        Option option = optionRepository.findById(dto.getOptionId())
-                                .orElseThrow(() -> new RuntimeException("Option not found"));
-
-                        OptionByGroup og = new OptionByGroup();
-                        og.setGroup(group);
-                        og.setOptions(List.of(option));
-                        return og;
-                    }).toList();
-
-            // DB 저장
-            ogRepository.saveAll(optionByGroups);
-        }
-
-        return "모든 그룹 옵션 저장 완료";
-    }
+        return optionByGroupService.createOptionByGroup(ogDto);
+}
 }
 
 
