@@ -10,7 +10,10 @@ import me.dev.repository.OptionRepository;
 import me.dev.repository.MenuRepository;
 import me.dev.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class MenuGroupService {
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
-    private MenuGroupRepository menuGroupRepository;
+    private MenuGroupRepository mgRepository;
     @Autowired
     private OptionRepository optionRepository;
 
@@ -32,8 +35,18 @@ public class MenuGroupService {
         MenuGroup menuGroup = new MenuGroup();
         menuGroup.setMenu(menu);
 
-        MenuGroup saved = menuGroupRepository.save(menuGroup);
-        return new MenuGroupDto(saved);
+        List<Group> groups = groupRepository.findAllByIdIn(dto.getGroupId());
+        List<MenuGroup> mg = groups.stream()
+                .map(group -> {
+                    MenuGroup menuG = new MenuGroup();
+                    menuG.setMenu(menu);
+                    menuG.setGroup(group);
+                    return menuG;
+                })
+                .toList();
+
+        mgRepository.saveAll(mg);
+        return dto;
     }
 
 }

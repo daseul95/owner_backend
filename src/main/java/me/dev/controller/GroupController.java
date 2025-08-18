@@ -91,10 +91,12 @@ public class GroupController {
   }
      */
     @PostMapping("/group/option")
-    public ResponseEntity<?> createOptionByGroup(@RequestBody OptionByGroupDto ogDto){
+    public ResponseEntity<?> createOptionByGroup(@RequestBody OptionByGroupDto ogDto) {
 
         return optionByGroupService.createOptionByGroup(ogDto);
-}
+    }
+
+
 }
 
 

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.dev.entity.MenuGroup;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,12 +16,12 @@ import me.dev.entity.MenuGroup;
 public class MenuGroupDto {
     private Long id;
     private Long menuId;   // MenuDto 대신 ID만 넣기 권장
-    private boolean isRequired;
+    private List<Long> groupId;
 
 
     public MenuGroupDto(MenuGroup entity) {
         this.id = entity.getId();
         this.menuId = entity.getMenu().getId();
-        this.isRequired = entity.isRequired();
+        this.groupId = List.of(entity.getGroup().getId());
     }
 }

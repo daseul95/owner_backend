@@ -1,15 +1,19 @@
 package me.dev.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.dev.dto.payload.DTO.GroupDto;
 import me.dev.dto.payload.DTO.MenuDto;
+import me.dev.dto.payload.DTO.MenuGroupDto;
 import me.dev.dto.payload.request.CreateMenuDTO;
 import me.dev.dto.payload.request.MenuRequestDto;
 import me.dev.dto.payload.request.StoreRequestDto;
 import me.dev.dto.payload.response.MenuResponseDto;
 import me.dev.dto.payload.response.StoreResponseDto;
 import me.dev.entity.Menu;
+import me.dev.entity.MenuGroup;
 import me.dev.entity.Store;
 import me.dev.entity.User;
+import me.dev.service.MenuGroupService;
 import me.dev.service.MenuService;
 import me.dev.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +36,8 @@ public class MenuController {
     @Autowired
     private StoreService storeService;
 
+    @Autowired
+    private MenuGroupService menuGroupService;
 
 
     // 메뉴 하나 등록 (POST)
@@ -100,6 +106,13 @@ public class MenuController {
 
         menuService.deleteMenu(id);
         return ResponseEntity.noContent().build(); // 204 No Content
+    }
+
+
+    @PostMapping("/menu/group")
+    public ResponseEntity<?> createMenuGroup(@RequestBody MenuGroupDto mgDto){
+        MenuGroupDto menuGroupDTO = menuGroupService.createMenuGroup(mgDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(menuGroupDTO);
     }
 
 
