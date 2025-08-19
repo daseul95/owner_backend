@@ -12,7 +12,4 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     Optional<Store> findFirstByUser_Id(Long userId);
     List<Store> findAllByUser_Id(Long userId);
 
-    @Query("SELECT s.id FROM Store s WHERE s.user.id = :userId")
-    Optional<Long> findFirstStoreIdByUserId(@Param("userId") Long userId);
-
 }

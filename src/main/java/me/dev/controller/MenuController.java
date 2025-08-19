@@ -108,6 +108,13 @@ public class MenuController {
         return ResponseEntity.noContent().build(); // 204 No Content
     }
 
+    /*
+    {
+
+  "menuId": 1,
+  "groupId": [1, 2, 3]
+}
+     */
 
     @PostMapping("/menu/group")
     public ResponseEntity<?> createMenuGroup(@RequestBody MenuGroupDto mgDto){

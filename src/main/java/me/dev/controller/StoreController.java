@@ -43,7 +43,7 @@ public class StoreController {
 
     // 가게 등록 (POST)
     /*  {
-   "storeName": "헬로수정완",
+   "storeName": "옐로헬로",
           "businessNum": "070-1234-5678",
           "postNum": "06234",
           "description": "오프라인 카페입니다.",

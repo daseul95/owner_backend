@@ -22,13 +22,12 @@ public class User  implements UserDetails {
 
 
     @Id
-    @Column(name="user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
 
-    @Column(name = "login_id",unique = true)
+    @Column(name = "user_id",unique = true)
     private String userId;
 
     private String nickname;

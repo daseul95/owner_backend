@@ -64,8 +64,6 @@ public class StoreService {
                 .lat(dto.getLat())
                 .longti(dto.getLongti())
                 .imgUrl(dto.getImgUrl())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build();
 
         storeRepository.save(store);
