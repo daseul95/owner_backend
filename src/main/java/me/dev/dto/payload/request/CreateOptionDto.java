@@ -14,7 +14,7 @@ public class CreateOptionDto {
 
     private String category;
     private String name;
-    private int optionPrice;
+    private int price;
     private String des;
     private String imgUrl;
 

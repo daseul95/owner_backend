@@ -35,7 +35,7 @@ public class OptionController {
      {
     "category" : "토핑",
     "name" : "토마토",
-    "optionPrice" : 300,
+    "price" : 300,
     "des" : "상큼",
     "imgUrl" : "c://image/a"
     }

@@ -22,6 +22,6 @@ public class SelectedOption {
     private Option option;
 
     private int quantity;
-    private int optionPrice;
+    private int price;
 
 }

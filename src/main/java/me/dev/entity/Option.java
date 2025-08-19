@@ -26,7 +26,7 @@ public class Option {
     private String category;
 
     private String name;   // 옵션명 (예: "사이즈", "추가치즈")
-    private int optionPrice;     // 옵션 가격
+    private int price;     // 옵션 가격
     private String des;
     private String imgUrl;
 
@@ -37,9 +37,9 @@ public class Option {
     @JsonBackReference
     private OptionByGroup optionByGroup;
 
-    public Option(String name, int optionPrice, String des,String imgUrl) {
+    public Option(String name, int price, String des,String imgUrl) {
         this.name = name;
-        this.optionPrice = optionPrice;
+        this.price = price;
         this.des = des;
         this.imgUrl = imgUrl;
 

@@ -20,7 +20,7 @@ public class OptionResponseDto {
     public OptionResponseDto(Option option) {
         this.id = option.getId();
         this.name = option.getName();
-        this.price = option.getOptionPrice();
+        this.price = option.getPrice();
         this.des = option.getDes();
         this.imgUrl=option.getImgUrl();
     }

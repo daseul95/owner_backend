@@ -34,7 +34,7 @@ public class OptionService {
     /* {
     String category;
     String name;
-    int optionPrice;
+    int price;
     String des;
     String imgUrl;
 }*/
@@ -44,7 +44,7 @@ public class OptionService {
         Option option = new Option();
         option.setName(dto.getName());
         option.setCategory(dto.getCategory());
-        option.setOptionPrice(dto.getOptionPrice());
+        option.setPrice(dto.getPrice());
         option.setDes(dto.getDes());
         option.setImgUrl(dto.getImgUrl());
         Option savedOption = optionRepository.save(option);
@@ -71,7 +71,7 @@ public class OptionService {
         if (dto.getName() != null) option.setName(dto.getName());
         if (dto.getCategory() != null) option.setCategory(dto.getCategory());
         if (dto.getDes() != null) option.setDes(dto.getDes());
-        if (dto.getOptionPrice() != 0) option.setOptionPrice(dto.getOptionPrice());
+        if (dto.getPrice() != 0) option.setPrice(dto.getPrice());
         if (dto.getImgUrl() != null) option.setImgUrl(dto.getImgUrl());
     }
 

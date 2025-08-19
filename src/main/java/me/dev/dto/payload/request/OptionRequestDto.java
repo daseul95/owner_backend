@@ -10,6 +10,6 @@ public class OptionRequestDto {
     private String name;
     private String category;
     private String des;
-    private int optionPrice;
+    private int price;
     private String imgUrl;
 }
