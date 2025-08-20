@@ -47,12 +47,10 @@ public class StoreService {
     String imgUrl;
    }
      */
-    public CreateStoreDto createStore(CreateStoreDto dto,@AuthenticationPrincipal User userDetails) throws IOException {
+    public CreateStoreDto createStore(CreateStoreDto dto,User user) throws IOException {
+        System.out.println("userDetail.getId(): "+user.getId());
 
-        User user= userRepository.findById(userDetails.getId())
-                .orElseThrow(() -> new IllegalArgumentException("사용자 없음"));
 
-        System.out.println("create store 서비스 진입");
         Store store = Store.builder()
                 .user(user)
                 .storeName(dto.getStoreName())

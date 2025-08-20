@@ -13,7 +13,7 @@ public class CreateStoreDto {
     private String storeName;
     private String businessNum;
     private String postNum;
-    private Long userId;
+    private String userId;
     private String description;
     private String phone;
     private String address;
