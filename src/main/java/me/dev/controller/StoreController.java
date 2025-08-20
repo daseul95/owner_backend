@@ -84,7 +84,7 @@ public class StoreController {
         Long userId = userDetails.getId();
 
         // 유저 ID로 스토어 조회
-        List<Store> stores = storeService.getStoresByUserId(userId);
+        List<Store> stores = storeService.getStoresByUser_Id(userId);
 
         List<StoreResponseDto> storeDto = stores.stream()
                 .map( store -> new StoreResponseDto(store.getId(),store.getStoreName(),userId,store.getBusinessNum(),

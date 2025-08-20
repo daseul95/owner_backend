@@ -9,16 +9,10 @@ import me.dev.repository.UserRepository;
 import me.dev.entity.Store;
 import me.dev.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -108,14 +102,8 @@ public class StoreService {
         return storeDto;
     }
 
-
-    public Store getStoreByUserId(Long userId) {
-        return storeRepository.findFirstByUser_Id(userId)
-                .orElseThrow(() -> new RuntimeException("Store not found for user id: " + userId));
-    }
-
-    public Long getStoreIdByUserId(Long userId){
-        Optional<Store> storeOptional = storeRepository.findFirstByUser_Id(userId);
+    public Long getStoreIdByUser_Id(Long id){
+        Optional<Store> storeOptional = storeRepository.findFirstByUser_Id(id);
         if (storeOptional.isPresent()) {
             Store store = storeOptional.get();
             Long storeId = store.getId();
@@ -125,7 +113,7 @@ public class StoreService {
         }
     }
 
-    public List<Store> getStoresByUserId(Long userId) {
+    public List<Store> getStoresByUser_Id(Long userId) {
         return storeRepository.findAllByUser_Id(userId);
     }
 

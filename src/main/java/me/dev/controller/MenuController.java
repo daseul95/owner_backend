@@ -1,17 +1,11 @@
 package me.dev.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.dev.dto.payload.DTO.GroupDto;
 import me.dev.dto.payload.DTO.MenuDto;
 import me.dev.dto.payload.DTO.MenuGroupDto;
 import me.dev.dto.payload.request.CreateMenuDTO;
-import me.dev.dto.payload.request.MenuRequestDto;
-import me.dev.dto.payload.request.StoreRequestDto;
 import me.dev.dto.payload.response.MenuResponseDto;
-import me.dev.dto.payload.response.StoreResponseDto;
 import me.dev.entity.Menu;
-import me.dev.entity.MenuGroup;
-import me.dev.entity.Store;
 import me.dev.entity.User;
 import me.dev.service.MenuGroupService;
 import me.dev.service.MenuService;
@@ -22,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -57,9 +50,10 @@ public class MenuController {
             @AuthenticationPrincipal User userDetails,
             @RequestBody CreateMenuDTO dto
     ) {
-        Long userId = userDetails.getId();
-        Long storeId = storeService.getStoreIdByUserId(userId);
-        Menu menu = menuService.createMenu(storeId,userId,dto);
+        Long id = userDetails.getId();
+        System.out.println("getId() : " + id);
+        Long storeId = storeService.getStoreIdByUser_Id(id);
+        Menu menu = menuService.createMenu(storeId,id,dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(menu);
     }
 

@@ -24,12 +24,11 @@ import java.util.List;
 public class Store {
 
     @Id
-    @Column(name="id")
+    @Column(name="store_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
 
