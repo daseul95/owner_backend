@@ -108,12 +108,14 @@ public class MenuController {
         return ResponseEntity.noContent().build(); // 204 No Content
     }
 
+    //메뉴에 그룹 등록 (POST)
     /*
     {
 
   "menuId": 1,
   "groupId": [1, 2, 3]
-}
+
+  }
      */
 
     @PostMapping("/menu/group")

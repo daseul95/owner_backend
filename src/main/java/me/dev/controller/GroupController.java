@@ -1,5 +1,6 @@
 package me.dev.controller;
 
+import jakarta.transaction.Transactional;
 import me.dev.dto.payload.DTO.GroupDto;
 import me.dev.dto.payload.DTO.OptionByGroupDto;
 import me.dev.entity.Group;
@@ -83,6 +84,7 @@ public class GroupController {
         groupService.deleteGroup(id);
     }
 
+
     //옵션과 함께 하나의 그룹 생성 (POST)
     /*
   {
@@ -96,6 +98,30 @@ public class GroupController {
         return optionByGroupService.createOptionByGroup(ogDto);
     }
 
+    // 그룹에 등록된 옵션찾기 (GET)
+    @GetMapping("/group/{id}/option")
+    public ResponseEntity<?> getOptionByGroup(@PathVariable("id") Long id){
+        OptionByGroupDto resultOgDto = optionByGroupService.getOptionByGroup(id);
+        return ResponseEntity.ok(resultOgDto);
+    }
+
+
+
+    // 그룹 바꾸기 (PATCH)
+    /*
+     {"groupId": 4}
+     */
+    @PatchMapping("/group/{id}/option")
+    public ResponseEntity<?> patchOptionByGroup(@PathVariable("id") Long id,@RequestBody OptionByGroupDto dto){
+        String result = optionByGroupService.patchOptionByGroup(id,dto);
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/group/{id}/option")
+    public ResponseEntity<?> deleteGroupOptions(@PathVariable("id") Long id) {
+        String result = optionByGroupService.deleteOptionByGroup(id);
+        return ResponseEntity.ok(result);
+    }
 
 }
 

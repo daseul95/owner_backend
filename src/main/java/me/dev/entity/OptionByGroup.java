@@ -23,7 +23,7 @@ public class OptionByGroup {
     private Group group;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "option_id")
     private Option option;
 }
